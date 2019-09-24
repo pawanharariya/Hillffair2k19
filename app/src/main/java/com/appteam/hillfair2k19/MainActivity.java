@@ -1,7 +1,19 @@
 package com.appteam.hillfair2k19;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
+import android.view.animation.ScaleAnimation;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -20,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+        FaceSmash fragment = new FaceSmash();
+        fragmentTransaction.add(R.id.fragmentHolder, fragment);
+        fragmentTransaction.commit();
 
         // For Volley Api Users
 
@@ -100,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
             public void notifyError(String requestType, VolleyError error) {
 }
         };
+
     }
     void initAndroidNetworkingCallback(){
         mResultCallbackAndroidNeworking = new IResult() {
