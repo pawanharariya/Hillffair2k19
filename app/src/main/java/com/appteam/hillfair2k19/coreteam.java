@@ -1,7 +1,8 @@
 package com.appteam.hillfair2k19;
 
 
-import android.app.Activity;
+import
+        android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -23,6 +24,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.appteam.hillfair2k19.model.Team;
 
 
 /**
@@ -33,7 +35,7 @@ public class coreteam extends Fragment {
     ProgressBar loadwall;
     private RecyclerView recyclerView;
     private TeamAdapter teamAdapter;
-    private List<appteam.nith.hillffair2k18.model.Team> teamList = new ArrayList<>();
+    private List<com.appteam.hillfair2k19.model.Team> teamList = new ArrayList<>();
     private Activity activity;
     IResult mResultCallbackAndroidNeworking;
     public coreteam() {
@@ -67,13 +69,13 @@ public class coreteam extends Fragment {
 
     public void getData() {
         teamList.clear();
-//        teamList.add(new Team("Captaion Marvel", "https://www.hdwallpapersfreedownload.com/uploads/large/super-heroes/captain-marvel-avengers-brie-larson-super-hero-hd-wallpaper.jpg", "Chief"));
-//        teamList.add(new Team("Thanos", "https://pre00.deviantart.net/db91/th/pre/i/2017/197/8/0/thanos_wallpaper_16_by_rippenstain-dbghpzw.jpg", "Villan"));
-//        teamList.add(new Team("Iron Mam", "https://wallpapersite.com/images/pages/ico_n/15263.jpg", "Hero"));
-//        teamAdapter.notifyDataSetChanged();
+        teamList.add(new Team("Captaion Marvel", "https://www.hdwallpapersfreedownload.com/uploads/large/super-heroes/captain-marvel-avengers-brie-larson-super-hero-hd-wallpaper.jpg", "Chief"));
+        teamList.add(new Team("Thanos", "https://pre00.deviantart.net/db91/th/pre/i/2017/197/8/0/thanos_wallpaper_16_by_rippenstain-dbghpzw.jpg", "Villan"));
+        teamList.add(new Team("Iron Mam", "https://wallpapersite.com/images/pages/ico_n/15263.jpg", "Hero"));
+        teamAdapter.notifyDataSetChanged();
 
         //Initialising
-        initAndroidNetworkingCallback();
+//        initAndroidNetworkingCallback();
         com.androidnetworking.AndroidNetworking.initialize(getActivity());
         com.appteam.hillfair2k19.AndroidNetworking androidNetworking = new com.appteam.hillfair2k19.AndroidNetworking(mResultCallbackAndroidNeworking,getActivity());
 
@@ -106,7 +108,7 @@ public class coreteam extends Fragment {
                             String name = json.getString("name");
                             String profile = json.getString("image_url");
                             String position = json.getString("position");
-                            teamList.add(new appteam.nith.hillffair2k18.model.Team(name, profile, position));
+                            teamList.add(new com.appteam.hillfair2k19.model.Team(name, profile, position));
                         }
                         teamAdapter.notifyDataSetChanged();
 

@@ -1,19 +1,14 @@
 package com.appteam.hillfair2k19.model;
 
-/**
- * Created by naman on 20-09-2018.
- */
+import java.util.Collection;
 
-public class Team {
+public class contributorsItem {
+    String name, image, githubUrl;
 
-    String name;
-    String image;
-    String position;
-
-    public Team(String name, String image, String position) {
+    public contributorsItem(String name, String image, String githubUrl) {
         this.name = name;
         this.image = image;
-        this.position = position;
+        this.githubUrl = githubUrl;
     }
 
     public String getName() {
@@ -32,11 +27,12 @@ public class Team {
         this.image = image;
     }
 
-    public String getPosition() {
-        return position;
+    public String getGithubUrl() {
+        return githubUrl;
     }
 
-    public void setPosition(String position) {
-        this.position = position;
+    public void setGithubUrl(String githubUrl) {
+        this.githubUrl = githubUrl;
     }
 }
+

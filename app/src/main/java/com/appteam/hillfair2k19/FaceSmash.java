@@ -1,11 +1,17 @@
 package com.appteam.hillfair2k19;
 
+
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+
+import android.os.Handler;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -24,6 +30,8 @@ import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -43,6 +51,12 @@ public class FaceSmash extends Fragment {
 
     ArrayList<String> urls;
 
+//    ArrayList<User> users;
+
+    VolleyService mVolleyService;
+
+
+
 
 
 
@@ -57,8 +71,6 @@ public class FaceSmash extends Fragment {
         super.onCreate(savedInstanceState);
         urls=new ArrayList<>();
 
-
-
     }
 
     @Override
@@ -68,7 +80,12 @@ public class FaceSmash extends Fragment {
         final View inflateView= inflater.inflate(R.layout.fragment_face_smash, container, false);
 
         initVolleyCallback();
+
+     mVolleyService = new VolleyService(mResultCallback,getContext());
+
+
        final VolleyService mVolleyService = new VolleyService(mResultCallback,getContext());
+
 //        for (int i=0;i<5;++i)
 //       mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER","/facesmash");
 
@@ -97,8 +114,17 @@ public class FaceSmash extends Fragment {
        final  ImageView secondPersonImage=inflateView.findViewById(R.id.secondPersonImage);
 
 
+        if(urls.size()>1)
+        {  Picasso.with(getContext()).load(urls.get(0)).into(firstPersonImage);
+       Picasso.with(getContext()).load(urls.get(1)).into(secondPersonImage);}
+else{
+            handleNoIMages();
+        }
+
+
        Picasso.with(getContext()).load(urls.get(0)).into(firstPersonImage);
        Picasso.with(getContext()).load(urls.get(1)).into(secondPersonImage);
+
 
 
 
@@ -119,18 +145,43 @@ public class FaceSmash extends Fragment {
                 animateHeart(btn2);
 
 
+                // TODO: post url and user
+
+//                postresult(urls.get(0),users.get(0));
+
+                if (urls.size()<4) handleNoIMages();
+
+                else{
+                Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
+                Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
+
+
+
                 Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
                 Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
 
                 // TODO: post url and user
 
+
                 urls.remove(0);
                 urls.remove(1);
+
+//                    users.remove(0);
+//                    users.remove(1);
+                }
+
+               // mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER",baseUrl+"/facesmash");
+
+
+
+//                urls.add(url2);
+//                urls.add(url1);
 
                // mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER","/facesmash");
 
                 urls.add(url2);
                 urls.add(url1);
+
 
 
 
@@ -166,6 +217,26 @@ public class FaceSmash extends Fragment {
 
                 // TODO: post url and user
 
+
+//                postresult(urls.get(1),users.get(1));
+
+                if (urls.size()<4) handleNoIMages();
+
+                else{
+                    Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
+                    Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
+
+
+                    urls.remove(0);
+                    urls.remove(1);
+
+//                    users.remove(0);
+//                    users.remove(1);
+                    // mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER",baseUrl+"/facesmash");
+                    }
+
+
+
                 Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
                 Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
 
@@ -175,6 +246,7 @@ public class FaceSmash extends Fragment {
                 urls.remove(1);
 
                 // mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER","/facesmash");
+
 
                 urls.add(url2);
                 urls.add(url1);
@@ -268,6 +340,17 @@ public class FaceSmash extends Fragment {
 
                         // TODO: read user
 
+
+//                        try {
+//                            User user = obj1.get(url);
+//                            users.add(user);
+//                        } catch (JSONException e) {
+//                            // Something went wrong!
+//                            e.printStackTrace();
+//                        }
+
+
+
                     }
 
                     Iterator<String> it2=obj2.keys();
@@ -276,6 +359,16 @@ public class FaceSmash extends Fragment {
                         urls.add(url);
 
                         // TODO: read user
+
+
+//                        try {
+//                            User user = obj2.get(url);
+//                            users.add(user);
+//                        } catch (JSONException e) {
+//                            // Something went wrong!
+//                            e.printStackTrace();
+//                        }
+
                     }
 
 
@@ -289,5 +382,38 @@ public class FaceSmash extends Fragment {
         };
 
     }
+
+
+    void handleNoIMages(){
+        new AlertDialog.Builder(getContext())
+                .setTitle("No Entries")
+                .setMessage("Sorry No Entries Left!")
+
+                // Specifying a listener allows you to take an action before dismissing the dialog.
+                // The dialog is automatically dismissed when a dialog button is clicked.
+                .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Continue with delete operation
+
+                        //TODO: redirect to home page
+                    }
+                })
+
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+    }
+
+//    void postresult(String imageUrl, User user){
+//
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//    jsonObject.put(imageUrl,user);
+//
+//} catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        mVolleyService.postJsonDataVolley("POSTJSONDATALIFESAVER",baseUrl+"/facesmash",jsonObject);
+//    }
+
 
 }

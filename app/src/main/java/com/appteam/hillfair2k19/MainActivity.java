@@ -39,7 +39,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        FaceSmash fragment = new FaceSmash();
+//        FaceSmash fragment = new FaceSmash();
+        com.appteam.hillfair2k19.fragments.SponsersFragment fragment = new com.appteam.hillfair2k19.fragments.SponsersFragment(this);
+//        coreteam fragment = new coreteam(this);
         fragmentTransaction.add(R.id.fragmentHolder, fragment);
         fragmentTransaction.commit();
 

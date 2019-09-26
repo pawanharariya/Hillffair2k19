@@ -16,16 +16,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
+
         android:theme="@style/AppTheme">
         <activity android:name=".Quiz_QnA"></activity>
         <activity android:name=".QuizCategories" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" >
+        </activity>
+        <activity android:name=".ProfileMain">
+        </activity>
+        <activity android:name=".Profile">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.ContributorsActivity">
+
+        </activity>
+<!--        <activity android:name=".Activity.core-->
+
     </application>
 
 </manifest>

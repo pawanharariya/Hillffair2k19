@@ -3,29 +3,24 @@ package com.appteam.adapters;
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appteam.hillfair2k19.R;
+import com.appteam.hillfair2k19.model.Team;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import com.appteam.hillfair2k19.model.Team;
-import de.hdodenhof.circleimageview.CircleImageView;
-
-/**
- * Coded by ThisIsNSH on 9/20/2018.
- */
-
-public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> {
+public class SponsorAdapter extends RecyclerView.Adapter<SponsorAdapter.MyViewHolder> {
 
     List<Team> teamList;
     Activity activity;
 
-    public TeamAdapter(List<Team> teamList, Activity activity) {
+    public SponsorAdapter(List<Team> teamList, Activity activity) {
         this.activity = activity;
         this.teamList = teamList;
     }
@@ -33,7 +28,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.adapter_core_team, null);
+        View view = View.inflate(parent.getContext(), R.layout.adapter_sponsor, null);
         return new MyViewHolder(view);
     }
 
@@ -42,11 +37,8 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
         Team team = teamList.get(position);
         holder.title.setText(team.getName());
         holder.position.setText(team.getPosition());
-        if (!team.getImage().isEmpty()) {
-//            Picasso.with(activity).load(urls.get(2)).into(holder.image);
-
+        if (!team.getImage().isEmpty())
             Picasso.with(activity).load(team.getImage()).resize(80, 80).centerCrop().into(holder.image);
-        }
     }
 
     @Override
@@ -55,7 +47,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView image;
+        ImageView image;
         TextView title;
         TextView position;
 
@@ -67,3 +59,5 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
         }
     }
 }
+
+
