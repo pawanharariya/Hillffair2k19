@@ -1,6 +1,7 @@
 package com.appteam.hillfair2k19;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -55,6 +56,8 @@ public class FaceSmash extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         urls=new ArrayList<>();
+
+
 
     }
 
