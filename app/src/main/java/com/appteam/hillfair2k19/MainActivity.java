@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
 import android.view.animation.AnimationUtils;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.util.Log;
@@ -26,6 +27,7 @@ import android.widget.Toast;
 
 import com.android.volley.VolleyError;
 import com.androidnetworking.AndroidNetworking;
+import com.cloudinary.android.MediaManager;
 import com.appteam.fragments.LeaderboardFragment;
 import com.schibsted.spain.parallaxlayerlayout.ParallaxLayerLayout;
 import com.schibsted.spain.parallaxlayerlayout.SensorTranslationUpdater;
@@ -33,6 +35,9 @@ import com.schibsted.spain.parallaxlayerlayout.SensorTranslationUpdater;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     IResult mResultCallback;
@@ -122,11 +127,30 @@ public class MainActivity extends AppCompatActivity {
 
 //        Intent intent=new Intent(MainActivity.this,QuizCategories.class);
 //        startActivity(intent);
+        Map config = new HashMap();
+        config.put("cloud_name", "dpxfdn3d8");
+        config.put("api_key", "172568498646598");
+        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
+        MediaManager.init(this, config);
+//        MediaManager.init(this);
 
-
-
+        Button button = findViewById(R.id.profile);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(MainActivity.this,Profile.class));
+            }
+        });
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
 //        FaceSmash fragment = new FaceSmash();
+//        com.appteam.hillfair2k19.fragments.SponsersFragment fragment = new com.appteam.hillfair2k19.fragments.SponsersFragment(this);
+////        coreteam fragment = new coreteam(this);
+
+
+
+
 //        fragmentTransaction.add(R.id.fragmentHolder, fragment);
 //        fragmentTransaction.commit();
 
