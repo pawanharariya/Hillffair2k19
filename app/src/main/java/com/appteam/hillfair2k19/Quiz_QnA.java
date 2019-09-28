@@ -103,8 +103,7 @@ public class Quiz_QnA extends AppCompatActivity {
                 Log.e("Loggerreer",response);
                 JSONArray jsonArray = null;
                 try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    jsonArray = jsonObject.getJSONArray("questions");
+                    jsonArray = new JSONArray(response);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -234,9 +233,8 @@ public class Quiz_QnA extends AppCompatActivity {
                 Log.e("Loggerreer",response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-
-                    Toast.makeText(Quiz_QnA.this,String.valueOf(jsonObject.getInt("score")),Toast.LENGTH_SHORT).show();
-                    Score = jsonObject.getInt("score");
+                    Toast.makeText(Quiz_QnA.this,String.valueOf(jsonObject.getInt("Score")),Toast.LENGTH_SHORT).show();
+                    Score = jsonObject.getInt("Score");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

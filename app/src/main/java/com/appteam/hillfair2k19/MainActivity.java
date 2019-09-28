@@ -167,7 +167,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
+//        Intent intent=new Intent(MainActivity.this,QuizCategories.class);
+//        startActivity(intent);
+//        MediaManager.init(this);
 
         CircleImageView profile = findViewById(R.id.profile);
         profile.setOnClickListener(new View.OnClickListener() {
