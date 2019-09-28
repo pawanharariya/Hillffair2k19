@@ -3,6 +3,7 @@ package com.appteam.hillfair2k19;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -45,6 +46,7 @@ public class Quiz_QnA extends AppCompatActivity {
     List<QuestionData> questions = new ArrayList<>();
     private static final String urlofApp = "http://api.hillffair.com/quiz/questions";
     private static final String urlofScore="http://api.hillffair.com/quiz/answers";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

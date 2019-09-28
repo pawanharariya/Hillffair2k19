@@ -3,6 +3,7 @@ package com.appteam.hillfair2k19;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ValueAnimator;
 import android.graphics.Color;
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayout gameLinearLayout;
     LinearLayout scheduleLinearLayout;
     LinearLayout couponLinearLayout;
-
+    ViewPager viewPager;
     ParallaxLayerLayout.TranslationUpdater sensorTranslationUpdater;
 
     public static int home ;
@@ -90,6 +91,27 @@ public class MainActivity extends AppCompatActivity {
 // work here to change Activity fragments (add, remove, etc.).  Example here of adding.
 //        fragmentTransaction.add (R.id.fragmentHolder, faceSmash);
 //        fragmentTransaction.commit ();
+        viewPager=findViewById(R.id.viewpager);
+        final SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), MainActivity.this);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+
         sponsors = findViewById(R.id.sponsors);
         club = findViewById(R.id.club);
         coreteam = findViewById(R.id.core);
@@ -171,13 +193,19 @@ public class MainActivity extends AppCompatActivity {
 //        startActivity(intent);
 //        MediaManager.init(this);
 
+
         CircleImageView profile = findViewById(R.id.profile);
+
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,Profile.class));
+                startActivity(new Intent(MainActivity.this,ProfileMain.class));
             }
         });
+    //    FragmentManager fragmentManager = getSupportFragmentManager();
+      //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+
 //        FaceSmash fragment = new FaceSmash();
 //        com.appteam.hillfair2k19.fragments.SponsersFragment fragment = new com.appteam.hillfair2k19.fragments.SponsersFragment(this);
 ////        coreteam fragment = new coreteam(this);

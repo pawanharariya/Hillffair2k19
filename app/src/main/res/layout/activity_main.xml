@@ -7,7 +7,10 @@
     android:background="#fff"
     tools:context=".MainActivity">
 
-
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
     <FrameLayout
         android:id="@+id/fragmentHolder"
         android:layout_width="match_parent"

@@ -13,9 +13,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:usesCleartextTraffic="true">
-        <activity android:name="com.appteam.adapters.ClubAdapter"></activity>
+        android:usesCleartextTraffic="true"
+        android:theme="@style/AppTheme" >
+       <!-- <activity android:name="com.appteam.adapters.ClubAdapter"></activity>-->
         <activity android:name=".Quiz_QnA" />
         <activity android:name=".QuizCategories" />
         <activity android:name=".ProfileMain"></activity>
@@ -27,6 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".Activity.ContributorsActivity"></activity>
     </application>
 

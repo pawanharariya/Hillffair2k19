@@ -31,8 +31,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.appteam.dialog.CautionDialog;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
@@ -47,9 +45,6 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
-
-import org.json.JSONArray;
-
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -64,7 +59,7 @@ public class Profile extends AppCompatActivity {
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 10;
     Bitmap selectedImage = null;
     int openDialog = 1;
-    LinearLayout progress;
+    LinearLayout progress,loadPic;
     String pass = "";
     private byte[] byteArray;
     private EditText studentName, rollNumber, branch, contactNumber, referral;
@@ -91,6 +86,7 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         AndroidNetworking.initialize(getApplicationContext());
         progress = findViewById(R.id.loadwall);
+        loadPic=findViewById(R.id.loadPic);
         buttonLoadImage = findViewById(R.id.galleryView);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
 
@@ -183,6 +179,7 @@ public class Profile extends AppCompatActivity {
                 Uri photoUri = data.getData();
                 try {
                     selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
+                    loadPic.setVisibility(View.VISIBLE);
                     isHuman(selectedImage);
 
                 } catch (IOException e) {
@@ -192,6 +189,7 @@ public class Profile extends AppCompatActivity {
             }
         } else if (requestCode == CAMERA) {
             selectedImage = (Bitmap) data.getExtras().get("data");
+            loadPic.setVisibility(View.VISIBLE);
             isHuman(selectedImage);
         }
 
@@ -230,13 +228,15 @@ public class Profile extends AppCompatActivity {
                                                 profilePicture = findViewById(R.id.profilePicture);
                                                 profilePicture.setImageBitmap(img);
                                                 buttonLoadImage.setVisibility(View.INVISIBLE);
+                                                loadPic.setVisibility(View.GONE);
                                                 Toast.makeText(Profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                                                 counter = 1;
                                             }
 
                                         }
                                         if (counter != 1)
-                                            Toast.makeText(Profile.this, "Not a Human Image!", Toast.LENGTH_SHORT).show();
+                                            loadPic.setVisibility(View.GONE);
+                                            Toast.makeText(Profile.this, "Not a Human Image!", Toast.LENGTH_LONG).show();
                                     }
                                 })
                         .addOnFailureListener(
@@ -288,8 +288,8 @@ public class Profile extends AppCompatActivity {
         rollNumber = findViewById(R.id.rollNumber);
         referral = findViewById(R.id.referal);
         branch = findViewById(R.id.branch);
-        if (findViewById(R.id.male).isSelected()) gender = "Male";
-        else if (findViewById(R.id.female).isSelected()) gender = "Female";
+        if (findViewById(R.id.male).isSelected()) gender = "MALE";
+        else if (findViewById(R.id.female).isSelected()) gender = "FEMALE";
         contactNumber = findViewById(R.id.contactNumber);
 //        final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
 ////        contactNumber.setText(sharedPreferences.getString("numberMobile", "None").replace("+91 ", ""));
@@ -421,13 +421,14 @@ public class Profile extends AppCompatActivity {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("Firebaseid","12345");
-                params.put("roll number", "abcd");
+                params.put("firebase_id","123459");
+                params.put("roll_number", "abcd");
                 params.put("branch","csed");
                 params.put("mobile","8888888888");
                 params.put("referral_friend","1234");
                 params.put("name","qq");
                 params.put("gender","ww");
+                params.put("face_smash_status","0");
                 params.put("image_url",imgUrl);
                 return params;
             }
