@@ -5,9 +5,6 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.cardview.widget.CardView;
@@ -29,6 +26,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
@@ -38,29 +37,40 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
+import java.util.HashMap;
+import java.util.Random;
 
 
 public class FaceSmash extends Fragment {
 
 
+    private Animation outAnimation;
+    private Animation inAnimation;
 
-    Animation outAnimation;
-    Animation inAnimation;
+    private IResult mResultCallback;
+    private VolleyService mVolleyService;
 
-    IResult mResultCallback;
-    IResult mResultCallbackAndroidNeworking;
+    private ArrayList<String> imageUrls;
+    private ArrayList<String> firebaseIds;
+    private ArrayList<String> genders;
+    private ArrayList<String> ratings;
 
-    ArrayList<String> urls;
+    private ImageView firstPersonImage;
+    private ImageView secondPersonImage;
 
 //    ArrayList<User> users;
 
-    VolleyService mVolleyService;
 
 
+    private HashMap<String, Boolean> hashMap;
 
+    private int firstImage;
+    private int secondImage;
 
+    private boolean flag = false;
+
+    private Animation popOut;
+    private Animation popIn;
 
 
     public FaceSmash() {
@@ -68,11 +78,22 @@ public class FaceSmash extends Fragment {
     }
 
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        urls=new ArrayList<>();
+        imageUrls = new ArrayList<>();
+        firebaseIds = new ArrayList<>();
+        genders = new ArrayList<>();
+        ratings = new ArrayList<>();
+        hashMap = new HashMap<>();
+
+
+        popOut = AnimationUtils.loadAnimation(getContext(),
+                R.anim.pop_out);
+
+        popIn = AnimationUtils.loadAnimation(getContext(),
+                R.anim.pop_in);
+
 
     }
 
@@ -80,7 +101,7 @@ public class FaceSmash extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        final View inflateView= inflater.inflate(R.layout.fragment_face_smash, container, false);
+        final View inflateView = inflater.inflate(R.layout.fragment_face_smash, container, false);
 
         Animation bottomUp = AnimationUtils.loadAnimation(getContext(),
                 R.anim.bottom_up);
@@ -88,97 +109,46 @@ public class FaceSmash extends Fragment {
                 R.anim.bottom_down);
 
 
-        CardView cardView1=inflateView.findViewById(R.id.card1);
-        CardView cardView2=inflateView.findViewById(R.id.card2);
+        CardView cardView1 = inflateView.findViewById(R.id.card1);
+        CardView cardView2 = inflateView.findViewById(R.id.card2);
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
 
 
-       cardView2.setTranslationY( metrics.heightPixels/2);
-        ObjectAnimator animation = ObjectAnimator.ofFloat(cardView1, "translationY",metrics.heightPixels/2);
+        cardView2.setTranslationY(metrics.heightPixels / 2);
+        ObjectAnimator animation = ObjectAnimator.ofFloat(cardView1, "translationY", metrics.heightPixels / 2);
         animation.setDuration(1000);
         animation.start();
 
-         animation = ObjectAnimator.ofFloat(cardView2, "translationY",-metrics.heightPixels/2);
+        animation = ObjectAnimator.ofFloat(cardView2, "translationY", -metrics.heightPixels / 2);
         animation.setDuration(1000);
         animation.start();
 
-//        cardView2.startAnimation(bottomDown);
-//        cardView1.startAnimation(bottomUp);
-
-//
-//        DisplayMetrics metrics = getResources().getDisplayMetrics();
-//        ObjectAnimator translationY = ObjectAnimator.ofFloat(cardView1, "y", metrics.heightPixels /2- cardView2.getHeight() /2); // metrics.heightPixels or root.getHeight()
-//        translationY.setDuration(1000);
-//        translationY.start();
-
-//      metrics = getResources().getDisplayMetrics();
-//     translationY = ObjectAnimator.ofFloat(cardView2, "y", (metrics.heightPixels / 2 -cardView2.getHeight() / 2)); // metrics.heightPixels or root.getHeight()
-//        translationY.setDuration(1000);
-//        translationY.start();
 
         initVolleyCallback();
 
-     mVolleyService = new VolleyService(mResultCallback,getContext());
+        mVolleyService = new VolleyService(mResultCallback, getContext());
 
 
-       final VolleyService mVolleyService = new VolleyService(mResultCallback,getContext());
+        final VolleyService mVolleyService = new VolleyService(mResultCallback, getContext());
 
 
-       mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER",getString(R.string.baseUrl)+"/faceSmash");
-
-        Log.i("size",String.valueOf(urls.size()));
-
-//
-//        final String url1="https://cdn.pinkvilla.com/files/styles/contentpreview/public/Katrina-Kaif-6_1.jpg?itok=7sgdn0sS";
-//        final String url2="https://i2.wp.com/thefrontierpost.com/wp-content/uploads/2018/03/Jacqueline-Fernandez.jpg?fit=1024%2C636&ssl=1";
-//
-//        urls.add(url1);
-//        urls.add(url2);
-//        urls.add(url2);
-//        urls.add(url1);
-//        urls.add(url1);
-//        urls.add(url2);
-//        urls.add(url2);
-//        urls.add(url1);
-//        urls.add(url1);
-//        urls.add(url2);
+        mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/faceSmash");
 
 
         outAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fadeout);
         inAnimation = AnimationUtils.loadAnimation(getContext(), R.anim.fadein);
 
 
-
-        final ImageView firstPersonImage=inflateView.findViewById(R.id.firstPersonImage);
-       final  ImageView secondPersonImage=inflateView.findViewById(R.id.secondPersonImage);
-
-
-        if(urls.size()>=1)
-        {  Picasso.with(getContext()).load(urls.get(0)).into(firstPersonImage);
-           Picasso.with(getContext()).load(urls.get(1)).into(secondPersonImage);
-        }
-
-//        else
-//            {
-//            handleNoIMages();
-//        }
-
-//
-//       Picasso.with(getContext()).load(urls.get(0)).into(firstPersonImage);
-//       Picasso.with(getContext()).load(urls.get(1)).into(secondPersonImage);
-
-
-
-
+        firstPersonImage = inflateView.findViewById(R.id.firstPersonImage);
+        secondPersonImage = inflateView.findViewById(R.id.secondPersonImage);
 
 
         firstPersonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-               // Toast.makeText(getContext(),"f",Toast.LENGTH_SHORT).show();
 
-                final ImageView btn2=inflateView.findViewById(R.id.heartImageView2);
+                final ImageView btn2 = inflateView.findViewById(R.id.heartImageView2);
                 btn2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -187,11 +157,28 @@ public class FaceSmash extends Fragment {
                 });
                 animateHeart(btn2);
 
+                firstPersonImage.startAnimation(popOut);
 
-                // TODO: post url and user
 
-//                postresult(urls.get(0),users.get(0));
+                popOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
 
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        firstPersonImage.startAnimation(popIn);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
+
+
+                postresult(firstImage);
 
 
                 final Handler handler = new Handler();
@@ -200,67 +187,25 @@ public class FaceSmash extends Fragment {
                     public void run() {
                         // Do something after 5s = 5000ms
 
-                        if (urls.size()<4) handleNoIMages();
+                        if (imageUrls.size() < 2) handleNoIMages();
 
-                        else{
-                            Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
-                            Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
-
-
-
-                            Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
-                            Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
-
-                            // TODO: post url and user
-
-
-                            urls.remove(0);
-                            urls.remove(1);
-
-//                    users.remove(0);
-//                    users.remove(1);
+                        else {
+                            changeImage();
                         }
-
                     }
                 }, 600);
-
-
-
-                mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER",getString(R.string.baseUrl)+"/faceSmash");
-
-
-
-//                urls.add(url2);
-//                urls.add(url1);
-
-               // mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER","/facesmash");
-
-//                urls.add(url2);
-//                urls.add(url1);
-
-
-
-
-               //Toast.makeText(getContext(),urls.get(0),Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getContext(),urls.get(1),Toast.LENGTH_SHORT).show();
-
-
 
 
             }
         });
 
 
-
-
-
-
         secondPersonImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getContext(),"f",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "f", Toast.LENGTH_SHORT).show();
 
-                final ImageView btn=inflateView.findViewById(R.id.heartImageView);
+                final ImageView btn = inflateView.findViewById(R.id.heartImageView);
                 btn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -269,12 +214,27 @@ public class FaceSmash extends Fragment {
                 });
                 animateHeart(btn);
 
+                secondPersonImage.startAnimation(popOut);
+
+                popOut.setAnimationListener(new Animation.AnimationListener() {
+                    @Override
+                    public void onAnimationStart(Animation animation) {
+
+                    }
+
+                    @Override
+                    public void onAnimationEnd(Animation animation) {
+                        secondPersonImage.startAnimation(popIn);
+                    }
+
+                    @Override
+                    public void onAnimationRepeat(Animation animation) {
+
+                    }
+                });
 
 
-                // TODO: post url and user
-
-
-//                postresult(urls.get(1),users.get(1));
+                postresult(secondImage);
 
 
                 final Handler handler = new Handler();
@@ -283,54 +243,24 @@ public class FaceSmash extends Fragment {
                     public void run() {
                         // Do something after 5s = 5000ms
 
-                        if (urls.size()<4) handleNoIMages();
 
-                        else{
+                        if (imageUrls.size() < 2) handleNoIMages();
 
-                            Picasso.with(getContext()).load(urls.get(2)).into(firstPersonImage);
-                            Picasso.with(getContext()).load(urls.get(3)).into(secondPersonImage);
+                        else {
 
-
-                            urls.remove(0);
-                            urls.remove(1);
-
-//                    users.remove(0);
-//                    users.remove(1);
-                             mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER",getString(R.string.baseUrl)+"/faceSmash");
+                            changeImage();
                         }
 
                     }
                 }, 600);
 
-
-
-
-
-
-                // TODO: post url and user
-
-
-                // mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER","/facesmash");
-
-//
-//                urls.add(url2);
-//                urls.add(url1);
-
-
-
-
             }
         });
-//
 
         return inflateView;
 
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-
-    }
 
     @Override
     public void onAttach(Context context) {
@@ -345,11 +275,8 @@ public class FaceSmash extends Fragment {
     }
 
 
-
-
-
-    public void animateHeart(final ImageView view) {
-        Log.i("S","ssf");
+    private void animateHeart(final ImageView view) {
+        Log.i("S", "ssf");
         view.setImageResource(R.drawable.orange_heart);
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.0f, 1.0f, 0.0f, 1.0f,
                 Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -368,136 +295,76 @@ public class FaceSmash extends Fragment {
 
     }
 
-    private Animation prepareAnimation(Animation animation){
+    private Animation prepareAnimation(Animation animation) {
         animation.setRepeatCount(1);
         animation.setRepeatMode(Animation.REVERSE);
         return animation;
     }
 
 
-    void initVolleyCallback(){
+    void initVolleyCallback() {
         mResultCallback = new IResult() {
-       JSONObject obj;
+            JSONObject obj;
+
             @Override
-            public void notifySuccess(String requestType, JSONObject response , JSONArray jsonArray) {
+            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
 
 
-                if (response != null)
-                {
+                if (response != null) {
 
-                    Log.e("Hellcatt",response.toString());
+                    Log.e("Hellcatt", response.toString());
                     //JsonObject
                     Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
-                    Log.e("zHell",jsonArray.toString());
+                } else {
+                    Log.e("zHell", jsonArray.toString());
 
 //                    //JsonArray
                     Toast.makeText(getContext(), String.valueOf(jsonArray), Toast.LENGTH_SHORT).show();
 
 
-                    for(int i=0;i<jsonArray.length();i++){
+                    for (int i = 0; i < jsonArray.length(); i++) {
 
                         try {
                             obj = jsonArray.getJSONObject(i);
-                            String url = obj.getString("url").replace("\\\\","");
-                            Log.e("URLs",url);
-                            urls.add(url);
+                            String url = obj.getString("url").replace("\\\\", "");
+                            Log.e("URLs", url);
+                            imageUrls.add(url);
+
+                            String id = obj.getString("firebase_id");
+                            firebaseIds.add(id);
+
+                            String gender = obj.getString("gender");
+                            genders.add(gender);
+
+                            String rating = obj.getString("rating");
+                            ratings.add(rating);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-
                     }
 
-//
-//
-//                    int i=0;
-//                    try {
-//                        obj=jsonArray.getJSONObject(i);
-//                        String url=obj.getString("url");
-//                        urls.add(url);
-//                        i++;
-//                    }catch (Exception e){
-//                        e.printStackTrace();
-//                    }
-//
-//                    while(i<5){
-//                        try {
-//                            obj=jsonArray.getJSONObject(i);
-//                            String url=obj.getString("url");
-//                            urls.add(url);
-//                            i++;
-//                        }catch (Exception e){
-//                            e.printStackTrace();
-//                        }
-//
-//
-//
-//                    }
-//                    try {
-//                       obj1=jsonArray.getJSONObject(0);
-//                    obj2=jsonArray.getJSONObject(1);
-//                    }catch (Exception e){
-//                        e.printStackTrace();
-//                    }
-//
-//
-//                    Iterator<String> it1=obj1.keys();
-//                    while(it1.hasNext()){
-//                        String url =it1.next();
-//                        urls.add(url);
-//
-//                        // TODO: read user
-//
-//
-////                        try {
-////                            User user = obj1.get(url);
-////                            users.add(user);
-////                        } catch (JSONException e) {
-////                            // Something went wrong!
-////                            e.printStackTrace();
-////                        }
-//
-//
-//
-//                    }
-//
-//                    Iterator<String> it2=obj2.keys();
-//                    while(it2.hasNext()){
-//                        String url =it2.next();
-//                        urls.add(url);
-//
-//                        // TODO: read user
-//
-//
-////                        try {
-////                            User user = obj2.get(url);
-////                            users.add(user);
-////                        } catch (JSONException e) {
-////                            // Something went wrong!
-////                            e.printStackTrace();
-////                        }
-//
-//                    }
-//
-//
-//
+
+                    if (imageUrls.size() >= 1 && !flag) {
+
+                        changeImage();
+                    }
+
+
                 }
             }
 
             @Override
             public void notifyError(String requestType, VolleyError error) {
-                Log.i("error",error.toString());
+                Log.i("error", error.toString());
             }
         };
 
     }
 
 
-    void handleNoIMages(){
+    void handleNoIMages() {
         new AlertDialog.Builder(getContext())
                 .setTitle("No Entries")
                 .setMessage("Sorry No Entries Left!")
@@ -516,17 +383,53 @@ public class FaceSmash extends Fragment {
                 .show();
     }
 
-//    void postresult(String imageUrl, User user){
-//
-//        JSONObject jsonObject = new JSONObject();
-//        try {
-//    jsonObject.put(imageUrl,user);
-//
-//} catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        mVolleyService.postJsonDataVolley("POSTJSONDATALIFESAVER",baseUrl+"/facesmash",jsonObject);
-//    }
+
+    private void postresult(int winner) {
+
+        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        String userId = currentFirebaseUser.getUid();
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("firebase_id", userId);
+            jsonObject.put("ID1", firebaseIds.get(firstImage));
+            jsonObject.put("ID2", firebaseIds.get(secondImage));
+            jsonObject.put("WID", firebaseIds.get(winner));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mVolleyService.postJsonDataVolley("POSTJSONDATALIFESAVER", getString(R.string.baseUrl) + "/faceSmash", jsonObject);
+    }
 
 
+    private void changeImage() {
+
+        int n = imageUrls.size() * imageUrls.size();
+        boolean flag2 = false;
+
+        while (!flag2 && n != 0) {
+            n--;
+            int firstUrl = new Random().nextInt(imageUrls.size());
+            int secondUrl = new Random().nextInt(imageUrls.size());
+
+            if (!hashMap.containsKey(imageUrls.get(firstUrl) + imageUrls.get(secondUrl)) && firstUrl != secondUrl) {
+
+                Picasso.with(getContext()).load(imageUrls.get(firstUrl)).placeholder(R.drawable.progress_animation).into(firstPersonImage);
+                Picasso.with(getContext()).load(imageUrls.get(secondUrl)).placeholder(R.drawable.progress_animation).into(secondPersonImage);
+                firstImage = firstUrl;
+                secondImage = secondUrl;
+
+                flag = true;
+                flag2 = true;
+                hashMap.put(imageUrls.get(firstUrl) + imageUrls.get(secondUrl), true);
+                hashMap.put(imageUrls.get(secondUrl) + imageUrls.get(firstUrl), true);
+
+            }
+        }
+
+        if (!flag2) {
+            handleNoIMages();
+        }
+    }
 }

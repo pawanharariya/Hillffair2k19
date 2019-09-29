@@ -1,4 +1,4 @@
-package com.appteam.fragments;
+package com.appteam.hillfair2k19;
 
 
 import android.app.Activity;
@@ -9,17 +9,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.VolleyError;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONArrayRequestListener;
+import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.appteam.adapters.LeaderboardAdapter;
+import com.appteam.hillfair2k19.IResult;
 import com.appteam.hillfair2k19.R;
+import com.appteam.hillfair2k19.VolleyService;
 import com.appteam.model.Leaderboard;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +43,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     private List<Leaderboard> clubList = new ArrayList<>();
     private TextView point, referral, popular;
     private Activity activity;
+    private IResult mResultCallback;
+    private VolleyService mVolleyService;
 
     public LeaderboardFragment() {
     }
@@ -76,34 +85,20 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         clubList.clear();
         loadwall.setVisibility(View.VISIBLE);
-        AndroidNetworking.get(getString(R.string.baseUrl) + "getleaderboard")
-                .build()
-                .getAsJSONArray(new JSONArrayRequestListener() {
-                    @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            loadwall.setVisibility(View.GONE);
-                            int users = response.length();
-                            System.out.println(response);
-                            for (int i = 0; i < users; i++) {
-                                JSONObject json = response.getJSONObject(i);
-                                String clubname = json.getString("name");
-                                String score = json.getString("score");
-                                String id = json.getString("image_url");
-                                clubList.add(new Leaderboard(clubname, id, score));
-                            }
-                            clubAdapter.notifyDataSetChanged();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
 
-                    @Override
-                    public void onError(ANError error) {
-                    }
-                });
+        initVolleyCallback();
 
-        clubAdapter.notifyDataSetChanged();
+        mVolleyService = new VolleyService(mResultCallback, getContext());
+
+
+        final VolleyService mVolleyService = new VolleyService(mResultCallback, getContext());
+
+
+        mVolleyService.getJsonObjectDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/leaderboard");
+
+
+
+
 
     }
 
@@ -128,4 +123,57 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         }
 
     }
+
+
+    void initVolleyCallback() {
+        mResultCallback = new IResult() {
+            JSONObject obj;
+
+            @Override
+            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
+
+
+                if (response != null) {
+
+                    Log.e("Hellcatt", response.toString());
+                    //JsonObject
+                    Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+
+                    try {
+                        JSONArray array=response.getJSONArray("leaderboard");
+                        for (int i=0;i<array.length();++i){
+                            JSONObject object=array.getJSONObject(i);
+                            String name=object.getString("Name");
+                            int candies=object.getInt("candies");
+                            String gender=object.getString("Gender");
+                            Leaderboard leaderboard=new Leaderboard(name,candies,gender);
+                            clubList.add(leaderboard);
+
+                        }
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+
+                    clubAdapter.notifyDataSetChanged();
+                    loadwall.setVisibility(View.INVISIBLE);
+                } else {
+                    Log.e("zHell", jsonArray.toString());
+
+//
+
+
+                }
+            }
+
+            @Override
+            public void notifyError(String requestType, VolleyError error) {
+                Log.i("error", error.toString());
+            }
+        };
+
+    }
+
 }

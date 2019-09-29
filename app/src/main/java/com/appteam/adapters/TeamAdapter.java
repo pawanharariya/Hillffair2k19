@@ -62,7 +62,7 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.MyViewHolder> 
         public MyViewHolder(View itemView) {
             super(itemView);
             position = itemView.findViewById(R.id.position);
-            title = itemView.findViewById(R.id.title);
+            title = itemView.findViewById(R.id.name);
             image = itemView.findViewById(R.id.image);
         }
     }

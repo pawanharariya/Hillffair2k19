@@ -14,7 +14,6 @@ import com.appteam.model.Club;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Coded by ThisIsNSH on Someday.
@@ -63,7 +62,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.MyViewHolder> 
         public MyViewHolder(View itemView) {
             super(itemView);
 //            arrow = itemView.findViewById(R.id.arrow);
-            title = itemView.findViewById(R.id.title);
+            title = itemView.findViewById(R.id.name);
             image = itemView.findViewById(R.id.image);
         }
     }

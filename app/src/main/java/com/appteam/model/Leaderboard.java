@@ -7,14 +7,14 @@ package com.appteam.model;
 public class Leaderboard {
 
     String name;
-    String image;
-    String info;
+    int candies;
+    String gender;
 
 
-    public Leaderboard(String name, String image, String info) {
+    public Leaderboard(String name, int candies, String gender) {
         this.name = name;
-        this.image = image;
-        this.info = info;
+        this.gender = gender;
+        this.candies = candies;
     }
 
     public String getName() {
@@ -25,19 +25,19 @@ public class Leaderboard {
         this.name = name;
     }
 
-    public String getImage() {
-        return image;
+    public int getCandies() {
+        return candies;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setCandies(int candies) {
+        this.candies = candies;
     }
 
-    public String getInfo() {
-        return info;
+    public String getGender() {
+        return gender;
     }
 
-    public void setInfo(String info) {
-        this.info = info;
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -41,13 +41,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final Leaderboard club = leaderboardList.get(position);
-        holder.title.setText(club.getName());
-        Log.e("aa", club.getImage());
-        if (!club.getImage().equals("null"))
-            Picasso.with(activity).load(club.getImage()).resize(80, 80).centerCrop().into(holder.image);
-        else
-            Picasso.with(activity).load("https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png").resize(80, 80).centerCrop().into(holder.image);
-        holder.arrow.setText(club.getInfo());
+        holder.name.setText(club.getName());
+       holder.candies.setText(String.valueOf(club.getCandies()));
+        holder.gender.setText(club.getGender());
         holder.rank.setText(String.valueOf(position + 1));
     }
 
@@ -57,15 +53,16 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView image;
-        TextView title;
-        TextView arrow, rank;
+        TextView candies;
+        TextView name;
+        TextView gender;
+        TextView rank;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            arrow = itemView.findViewById(R.id.arrow);
-            title = itemView.findViewById(R.id.title);
-            image = itemView.findViewById(R.id.image);
+            candies = itemView.findViewById(R.id.candies);
+            name = itemView.findViewById(R.id.name);
+            gender = itemView.findViewById(R.id.gender);
             rank = itemView.findViewById(R.id.rank);
         }
     }

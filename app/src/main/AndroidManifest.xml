@@ -19,6 +19,14 @@
         <activity android:name=".Quiz_QnA" />
         <activity android:name=".ProfileMain"></activity>
         <activity android:name=".Profile"></activity>
+        <activity
+            android:name="Login"
+            android:screenOrientation="portrait" />
+
+        <activity android:name="LoginActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +35,8 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".Activity.ContributorsActivity"></activity>
+        <activity android:name="ContributorsActivity"></activity>
+
     </application>
 
 </manifest>

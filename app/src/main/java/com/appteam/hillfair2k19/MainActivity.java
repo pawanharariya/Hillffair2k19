@@ -9,40 +9,23 @@ import android.animation.ValueAnimator;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.transition.CircularPropagation;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
-import android.view.animation.AnimationSet;
-import android.view.animation.AnimationUtils;
-import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.androidnetworking.AndroidNetworking;
 import com.appteam.fragments.ClubsFragment;
 import com.appteam.fragments.Coupons;
 import com.appteam.fragments.SponsersFragment;
-import com.cloudinary.android.MediaManager;
-import com.appteam.fragments.LeaderboardFragment;
 import com.schibsted.spain.parallaxlayerlayout.ParallaxLayerLayout;
-import com.schibsted.spain.parallaxlayerlayout.SensorTranslationUpdater;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -73,7 +56,9 @@ public class MainActivity extends AppCompatActivity {
     public static  int coupon;
 
     public static  int currentSelected;
+
     Button sponsors , club , coreteam , reward;
+
 
 
 
@@ -92,6 +77,7 @@ public class MainActivity extends AppCompatActivity {
         linkViews();
 
        FragmentManager fragmentManager=getSupportFragmentManager();
+
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction ();
         final FaceSmash faceSmash=new FaceSmash();
         LeaderboardFragment leaderboardFragment =new LeaderboardFragment();
@@ -156,6 +142,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
 //        ParallaxLayerLayout parallaxLayout=findViewById(R.id.parallaxLayout);
 //
 //        sensorTranslationUpdater = new SensorTranslationUpdater(this);
@@ -216,8 +203,6 @@ public class MainActivity extends AppCompatActivity {
 //        FaceSmash fragment = new FaceSmash();
 //        com.appteam.hillfair2k19.fragments.SponsersFragment fragment = new com.appteam.hillfair2k19.fragments.SponsersFragment(this);
 ////        coreteam fragment = new coreteam(this);
-
-
 
 
 //        fragmentTransaction.add(R.id.fragmentHolder, fragment);

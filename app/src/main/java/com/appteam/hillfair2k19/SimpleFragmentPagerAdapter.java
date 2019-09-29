@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.appteam.fragments.ClubsFragment;
 import com.appteam.fragments.Coupons;
-import com.appteam.fragments.LeaderboardFragment;
 import com.appteam.fragments.SponsersFragment;
 
 
