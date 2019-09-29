@@ -23,6 +23,7 @@ import com.appteam.Wall.WallFragment;
 import com.appteam.fragments.ClubsFragment;
 import com.appteam.fragments.Coupons;
 import com.appteam.fragments.SponsersFragment;
+import com.cloudinary.android.MediaManager;
 import com.schibsted.spain.parallaxlayerlayout.ParallaxLayerLayout;
 
 import org.json.JSONArray;
@@ -198,7 +199,7 @@ public class MainActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,Profile.class));
+                startActivity(new Intent(MainActivity.this,ProfileMain.class));
             }
         });
     //    FragmentManager fragmentManager = getSupportFragmentManager();
