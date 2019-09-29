@@ -80,7 +80,7 @@ public class coreteam extends Fragment {
         com.appteam.hillfair2k19.AndroidNetworking androidNetworking = new com.appteam.hillfair2k19.AndroidNetworking(mResultCallbackAndroidNeworking,getActivity());
 
         //                 GET REQUEST SINGLE JSON OBJECT
-        androidNetworking.getJsonObjectAndroidNetworking("GetCoreteam",activity.getString(R.string.baseUrl) + "/core_team");
+        androidNetworking.getJsonObjectAndroidNetworking("GetCoreteam",getString(R.string.baseUrl) + "/core_team");
 
 
 //        GET REQUEST FOR JSON ARRAY

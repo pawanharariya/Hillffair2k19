@@ -74,7 +74,7 @@ public class ClubsFragment extends Fragment {
     public void getData() {
         clubList.clear();
         loadwall.setVisibility(View.VISIBLE);
-        AndroidNetworking.get(activity.getString(R.string.baseUrl) + "/Club_info")
+        AndroidNetworking.get(getString(R.string.baseUrl) + "/Club_info")
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -88,7 +88,7 @@ public class ClubsFragment extends Fragment {
                                 String clubname = json.getString("club_name");
                                 String info = json.getString("description");
                                 String id = json.getString("image_url");
-                                Toast.makeText(activity, clubname, Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(activity, clubname, Toast.LENGTH_SHORT).show();
                                 clubList.add(new Club(clubname, id, info));
                             }
                             clubAdapter.notifyDataSetChanged();

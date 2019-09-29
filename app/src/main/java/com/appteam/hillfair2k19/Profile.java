@@ -424,14 +424,14 @@ public class Profile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(Profile.this, response, Toast.LENGTH_LONG).show();
+
                         progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Profile.this, error.toString(), Toast.LENGTH_LONG).show();
+
                     }
                 }) {
             @Override
