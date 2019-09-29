@@ -6,10 +6,15 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Base64;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +30,7 @@ import com.appteam.fragments.Coupons;
 import com.appteam.fragments.SponsersFragment;
 import com.cloudinary.android.MediaManager;
 import com.schibsted.spain.parallaxlayerlayout.ParallaxLayerLayout;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     IResult mResultCallback;
     IResult mResultCallbackAndroidNeworking;
 
+    CircleImageView profile;
     ImageButton homeButton;
     ImageButton gamesButton;
     ImageButton scheduleButton;
@@ -59,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
     public static  int games ;
     public static  int schedule ;
     public static  int coupon;
-
+    public static String fireBaseID;
     public static  int currentSelected;
 
     Button sponsors , club , coreteam , reward;
@@ -71,13 +78,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
+        fireBaseID = sharedPreferences.getString("fireBaseId",null);
         //configuring cloudinary
-//        Map config = new HashMap();
-//        config.put("cloud_name", "dpxfdn3d8");
-//        config.put("api_key", "172568498646598");
-//        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
-//        MediaManager.init(this, config);
+        Map config = new HashMap();
+        config.put("cloud_name", "dpxfdn3d8");
+        config.put("api_key", "172568498646598");
+        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
+        MediaManager.init(this, config);
 
         linkViews();
 
@@ -192,9 +200,15 @@ public class MainActivity extends AppCompatActivity {
 //        Intent intent=new Intent(MainActivity.this,QuizCategories.class);
 //        startActivity(intent);
 //        MediaManager.init(this);
-
-
-        CircleImageView profile = findViewById(R.id.profile);
+        profile=findViewById(R.id.profile);
+        SharedPreferences prefs = getSharedPreferences("number", Context.MODE_PRIVATE);
+        String check2 = prefs.getString("Image", "https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png");
+        if (!check2.equals("https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png")) {
+            Bitmap img = setProfile(check2);
+            profile.setImageBitmap(img);
+        } else {
+            Picasso.with(MainActivity.this).load(check2).resize(80, 80).centerCrop().into(profile);
+        }
 
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,6 +216,8 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this,ProfileMain.class));
             }
         });
+
+
     //    FragmentManager fragmentManager = getSupportFragmentManager();
       //  FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
@@ -271,6 +287,10 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //
 //        androidNetworking.postJsondataAndroidNetworking("POSTINGJOSNBODYTOLIFESAVER","https://lifesaverapp.herokuapp.com/controlpolice",jsonObject);
+    }
+    public Bitmap setProfile(String images) {
+        byte[] decodedByte = Base64.decode(images, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     void initVolleyCallback(){

@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,7 +17,9 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,6 +49,7 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -59,7 +64,9 @@ public class Profile extends AppCompatActivity {
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 10;
     Bitmap selectedImage = null;
     int openDialog = 1;
-    LinearLayout progress,loadPic;
+    SharedPreferences prefs;
+    SharedPreferences.Editor editor;
+    LinearLayout progress, loadPic;
     String pass = "";
     private byte[] byteArray;
     private EditText studentName, rollNumber, branch, contactNumber, referral;
@@ -68,6 +75,7 @@ public class Profile extends AppCompatActivity {
     private TextView buttonLoadImage, save;
     private Bitmap bmp, img;
     private int PICK_PHOTO_CODE = 1046;
+    private RadioButton male,female;
 
     public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;
@@ -86,13 +94,13 @@ public class Profile extends AppCompatActivity {
         setContentView(R.layout.activity_profile);
         AndroidNetworking.initialize(getApplicationContext());
         progress = findViewById(R.id.loadwall);
-        loadPic=findViewById(R.id.loadPic);
+        loadPic = findViewById(R.id.loadPic);
         buttonLoadImage = findViewById(R.id.galleryView);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                buttonLoadImage.setText("     ");
+
                 showPictureDialog();
             }
         });
@@ -179,8 +187,9 @@ public class Profile extends AppCompatActivity {
                 Uri photoUri = data.getData();
                 try {
                     selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
-                    loadPic.setVisibility(View.VISIBLE);
                     isHuman(selectedImage);
+                    loadPic.setVisibility(View.GONE);
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -189,13 +198,14 @@ public class Profile extends AppCompatActivity {
             }
         } else if (requestCode == CAMERA) {
             selectedImage = (Bitmap) data.getExtras().get("data");
-            loadPic.setVisibility(View.VISIBLE);
             isHuman(selectedImage);
+            loadPic.setVisibility(View.GONE);
         }
 
     }
 
-    public void isHuman(final Bitmap thumbnail) {
+
+    public void isHuman(final Bitmap thumbnail){
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(thumbnail);
         FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
                 .getVisionFaceDetector(highAccuracyOpts);
@@ -217,29 +227,24 @@ public class Profile extends AppCompatActivity {
                                             List<FirebaseVisionPoint> faceContours = face.getContour(FirebaseVisionFaceContour.ALL_POINTS).getPoints();
                                             //Log.v("FaceContours",String.valueOf(faceContours));
                                             if (faceContours != null) {
+                                                loadPic.setVisibility(View.VISIBLE);
                                                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
                                                 selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, bs);
                                                 byteArray = bs.toByteArray();
                                                 bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-
                                                 img = getResizedBitmap(bmp, 150);
                                                 pass = encodeTobase64(img);
-                                                profilePicture = findViewById(R.id.profilePicture);
+
                                                 profilePicture.setImageBitmap(img);
-                                                buttonLoadImage.setVisibility(View.INVISIBLE);
-                                                loadPic.setVisibility(View.GONE);
                                                 Toast.makeText(Profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                                                 counter = 1;
                                             }
-//                                            else
-//                                                loadPic.setVisibility(View.GONE);
-//                                                Toast.makeText(Profile.this, "Not a Human Image!", Toast.LENGTH_LONG).show();
 
                                         }
-                                        if (counter != 1)
+                                        if (counter != 1) {
                                             loadPic.setVisibility(View.GONE);
-                                            Toast.makeText(Profile.this, "Not a Human Image!", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(Profile.this, "Not a Human Image!", Toast.LENGTH_SHORT).show();
+                                        }
                                     }
                                 })
                         .addOnFailureListener(
@@ -291,8 +296,9 @@ public class Profile extends AppCompatActivity {
         rollNumber = findViewById(R.id.rollNumber);
         referral = findViewById(R.id.referal);
         branch = findViewById(R.id.branch);
-        if (findViewById(R.id.male).isSelected()) gender = "MALE";
-        else if (findViewById(R.id.female).isSelected()) gender = "FEMALE";
+        profilePicture = findViewById(R.id.profilePicture);
+        male = findViewById(R.id.male);
+        female = findViewById(R.id.female);
         contactNumber = findViewById(R.id.contactNumber);
 //        final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
 ////        contactNumber.setText(sharedPreferences.getString("numberMobile", "None").replace("+91 ", ""));
@@ -315,6 +321,12 @@ public class Profile extends AppCompatActivity {
         Branch = String.valueOf(branch.getText());
         referal = String.valueOf(referral.getText());
         ContactNumber = contactNumber.getText().toString();
+
+        if (male.isSelected())
+            gender = "MALE";
+        else if (female.isSelected())
+            gender = "FEMALE";
+
         if (ContactNumber == null)
             ContactNumber = "7587524626";
         if (Name.length() == 0) {
@@ -337,7 +349,7 @@ public class Profile extends AppCompatActivity {
                 editor.putString("Image", pass);
                 editor.putString("Gender", gender);
                 editor.commit();
-//               progress.setVisibility(View.VISIBLE);
+                progress.setVisibility(View.VISIBLE);
                 String requestId = MediaManager.get().upload(byteArray)
                         .unsigned("xf7gsy1r")
                         .callback(new UploadCallback() {
@@ -355,18 +367,20 @@ public class Profile extends AppCompatActivity {
                                 imgUrl = String.valueOf(resultData.get("url"));
                                 Toast.makeText(Profile.this, imgUrl + "ABCD", Toast.LENGTH_SHORT).show();
                                 post(ContactNumber);
-//                                startActivity(new Intent(Profile.this, MainActivity.class));
-//                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-//                                editor.putString("ImageURL", String.valueOf(resultData.get("url")));
-//                                editor.commit();
-//                                finish();
+                                startActivity(new Intent(Profile.this, MainActivity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+
+                                editor.putString("ImageURL", String.valueOf(resultData.get("url")));
+                                editor.commit();
+                                finish();
                             }
 
                             @Override
                             public void onError(String requestId, ErrorInfo error) {
                                 Toast.makeText(Profile.this, "Error", Toast.LENGTH_SHORT).show();
-                                Log.v("ErrorCloud",String.valueOf(error));
+                                Log.v("ErrorCloud", String.valueOf(error));
                             }
+
                             @Override
                             public void onReschedule(String requestId, ErrorInfo error) {
                             }
@@ -410,29 +424,30 @@ public class Profile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(Profile.this,response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(Profile.this, response, Toast.LENGTH_LONG).show();
+                        progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Profile.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(Profile.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Log.d("save",Name + "/" + RollNumber + "/" + ContactNumber+"/"+referal+"/"+gender+"/"+Branch+"/"+imgUrl);
-
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("firebase_id","10011");
+            protected Map<String, String> getParams() {
+                final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
+                String fireBaseId = sharedPreferences.getString("fireBaseId",null);
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("firebase_id", fireBaseId);
                 params.put("roll_number", RollNumber);
-                params.put("branch",Branch);
-                params.put("mobile",ContactNumber);
-                params.put("referral_friend",referal);
-                params.put("name",Name);
-                params.put("gender","MALE");
-                params.put("face_smash_status","0");
-                params.put("image_url",imgUrl);
+                params.put("branch", Branch);
+                params.put("mobile", ContactNumber);
+                params.put("referral_friend", referal);
+                params.put("name", Name);
+                params.put("gender", "MALE");
+                params.put("face_smash_status", "0");
+                params.put("image_url", imgUrl);
                 return params;
             }
 

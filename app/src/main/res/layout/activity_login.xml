@@ -160,11 +160,10 @@
         android:visibility="gone"/>
 
     <Button
+        android:id="@+id/phone_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:elevation="40dp"
-        android:id="@+id/phone_login"
-        />
+        android:elevation="40dp" />
 <!--        android:background="?attr/selectableItemBackgroundBorderless"-->
 
 </RelativeLayout>

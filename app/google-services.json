@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "1003460395361-rvbvdkkdhvrff94kvkec60rlb35d03m2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appteam.hillfair2k19",
+            "certificate_hash": "e3d940cb6ed4e76f301a143d6d7ee88dc18453d5"
+          }
+        },
+        {
           "client_id": "1003460395361-92h54g40h32ke0qlb4fddl5nho3tqc55.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

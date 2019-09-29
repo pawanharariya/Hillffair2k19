@@ -5,9 +5,11 @@ import
         android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -17,9 +19,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.cloudinary.android.MediaManager;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -27,10 +31,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button phone_button;
     private static final int RC_SIGN_IN = 200;
@@ -41,7 +47,25 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        //configuring cloudinary
+        Map config = new HashMap();
+        config.put("cloud_name", "dpxfdn3d8");
+        config.put("api_key", "172568498646598");
+        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
+        MediaManager.init(this, config);
+
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+        final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = sharedPreferences.edit();
+        String Login = sharedPreferences.getString("Login", "gsbs");
+        if (!Login.equals("gsbs")) {
+            finish();
+            startActivity(new Intent(this, MainActivity.class));
+        } else {
+            setContentView(R.layout.activity_login);
+
+        }
 
         Intent intent = new Intent(context, MainActivity.class);
         intent.putExtra("newBranch",newBranch);
@@ -60,7 +84,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 startActivityForResult(
                         AuthUI.getInstance()
                                 .createSignInIntentBuilder()
-                                .setAvailableProviders( Arrays.asList(
+                                .setAvailableProviders(Arrays.asList(
                                         new AuthUI.IdpConfig.PhoneBuilder().build()))
                                 .build(),
                         RC_SIGN_IN);
@@ -77,13 +101,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             final IdpResponse response = IdpResponse.fromResultIntent(data);
             // Successfully signed in
             if (resultCode == RESULT_OK) {
+                final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
+                final SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("Login", "Complete");
 
                 Toast.makeText(LoginActivity.this, "Authenticated.",
                         Toast.LENGTH_SHORT).show();
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
                 final String uid = mUser.getUid();
-                Intent intent = new Intent(context, MainActivity.class);
+                 editor.commit();
+                Intent intent = new Intent(context, Profile.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
 
@@ -125,7 +153,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 }
 
                 if (response.getError().getErrorCode() == ErrorCodes.UNKNOWN_ERROR) {
-                    Toast.makeText(getApplicationContext(),"Error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                     return;
                 }
             }

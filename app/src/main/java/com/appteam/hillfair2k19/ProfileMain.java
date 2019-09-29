@@ -143,7 +143,7 @@ public class ProfileMain extends AppCompatActivity {
             branch1.setEnabled(true);
 
         }
-        getProfile("1");//put Firebase ID here
+        getProfile(MainActivity.fireBaseID);
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -199,7 +199,7 @@ public class ProfileMain extends AppCompatActivity {
     private void getProfile(String id) {
 
         // Log.d("url", getResources().getString(R.string.baseUrl) + "getprofile/" + id);
-        AndroidNetworking.get(getResources().getString(R.string.baseUrl) + "/User/" + "12345")
+        AndroidNetworking.get(getResources().getString(R.string.baseUrl) + "/User/" +id)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
