@@ -76,7 +76,7 @@ public class SponsersFragment extends Fragment {
                         // do anything with response
                         try {
                             JSONArray response = resp.getJSONArray("sponsors");
-                            Toast.makeText(activity, String.valueOf(response), Toast.LENGTH_SHORT).show();
+                         //   Toast.makeText(activity, String.valueOf(response), Toast.LENGTH_SHORT).show();
                             loadwall.setVisibility(View.GONE);
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject json = response.getJSONObject(i);

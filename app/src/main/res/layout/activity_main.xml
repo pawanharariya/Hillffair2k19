@@ -359,6 +359,51 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
+            <TextView
+                android:id="@+id/facesmash"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:fontFamily="@font/psb"
+                android:text="Facesmash"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/leaderboard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:fontFamily="@font/psb"
+                android:text="Leaderboard"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/coreTeamNav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:fontFamily="@font/psb"
+                android:text="Core Team"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+            <TextView
+                android:id="@+id/clubsNav"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:fontFamily="@font/psb"
+                android:text="Clubs"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:visibility="gone" />
+
 
         </LinearLayout>
 

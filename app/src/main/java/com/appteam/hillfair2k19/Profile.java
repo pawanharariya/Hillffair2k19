@@ -77,7 +77,7 @@ public class Profile extends AppCompatActivity {
     private TextView buttonLoadImage, save;
     private Bitmap bmp, img;
     private int PICK_PHOTO_CODE = 1046;
-    private RadioButton male,female;
+    private RadioButton male, female;
 
     public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;
@@ -193,7 +193,6 @@ public class Profile extends AppCompatActivity {
                     isHuman(selectedImage);
 
 
-
                 } catch (IOException e) {
                     e.printStackTrace();
                     Toast.makeText(Profile.this, "Failed!", Toast.LENGTH_SHORT).show();
@@ -209,7 +208,7 @@ public class Profile extends AppCompatActivity {
     }
 
 
-    public void isHuman(final Bitmap thumbnail){
+    public void isHuman(final Bitmap thumbnail) {
         FirebaseVisionImage image = FirebaseVisionImage.fromBitmap(thumbnail);
         FirebaseVisionFaceDetector detector = FirebaseVision.getInstance()
                 .getVisionFaceDetector(highAccuracyOpts);
@@ -429,23 +428,23 @@ public class Profile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(Profile.this, response, Toast.LENGTH_LONG).show();
+
                         progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(Profile.this, error.toString(), Toast.LENGTH_LONG).show();
+
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() {
 
-                SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
-                String id = sharedPreferences.getString("fireBaseId",null);
+                SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
+                String id = sharedPreferences.getString("fireBaseId", null);
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("firebase_id",id);
+                params.put("firebase_id", id);
                 params.put("roll_number", RollNumber);
                 params.put("branch", Branch);
                 params.put("mobile", ContactNumber);

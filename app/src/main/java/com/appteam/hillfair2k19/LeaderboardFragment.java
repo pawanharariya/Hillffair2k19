@@ -137,7 +137,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
                     Log.e("Hellcatt", response.toString());
                     //JsonObject
-                    Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
 
                     try {
                         JSONArray array=response.getJSONArray("leaderboard");

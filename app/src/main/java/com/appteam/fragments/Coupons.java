@@ -68,13 +68,13 @@ public class Coupons extends Fragment {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(activity, response, Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(activity, response, Toast.LENGTH_SHORT).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(activity, String.valueOf(error), Toast.LENGTH_SHORT).show();
+                      //  Toast.makeText(activity, String.valueOf(error), Toast.LENGTH_SHORT).show();
                     }
                 }){
             @Override

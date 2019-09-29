@@ -314,12 +314,12 @@ public class FaceSmash extends Fragment {
 
                     Log.e("Hellcatt", response.toString());
                     //JsonObject
-                    Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.e("zHell", jsonArray.toString());
 
 //                    //JsonArray
-                    Toast.makeText(getContext(), String.valueOf(jsonArray), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), String.valueOf(jsonArray), Toast.LENGTH_SHORT).show();
 
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -386,22 +386,27 @@ public class FaceSmash extends Fragment {
 
     private void postresult(int winner) {
 
-        FirebaseUser currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
-        String userId = currentFirebaseUser.getUid();
+        String userId = null;
+        FirebaseUser currentFirebaseUser = null;
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            currentFirebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("firebase_id", userId);
-            jsonObject.put("ID1", firebaseIds.get(firstImage));
-            jsonObject.put("ID2", firebaseIds.get(secondImage));
-            jsonObject.put("WID", firebaseIds.get(winner));
+            userId = currentFirebaseUser.getUid();
+            if (userId != null) {
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("firebase_id", userId);
+                    jsonObject.put("ID1", firebaseIds.get(firstImage));
+                    jsonObject.put("ID2", firebaseIds.get(secondImage));
+                    jsonObject.put("WID", firebaseIds.get(winner));
 
-        } catch (JSONException e) {
-            e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                mVolleyService.postJsonDataVolley("POSTJSONDATALIFESAVER", getString(R.string.baseUrl) + "/faceSmash", jsonObject);
+            }
         }
-        mVolleyService.postJsonDataVolley("POSTJSONDATALIFESAVER", getString(R.string.baseUrl) + "/faceSmash", jsonObject);
     }
-
 
     private void changeImage() {
 
