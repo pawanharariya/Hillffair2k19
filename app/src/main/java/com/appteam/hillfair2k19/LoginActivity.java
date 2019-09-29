@@ -42,22 +42,24 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final int RC_SIGN_IN = 200;
     private Context context = this;
     public int newBranch = 0;
-
+    public static String fireBaseId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //configuring cloudinary
-        Map config = new HashMap();
-        config.put("cloud_name", "dpxfdn3d8");
-        config.put("api_key", "172568498646598");
-        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
-        MediaManager.init(this, config);
+//        Map config = new HashMap();
+//        config.put("cloud_name", "dpxfdn3d8");
+//        config.put("api_key", "172568498646598");
+//        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
+//        MediaManager.init(this, config);
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.putString("fireBaseId","12345");//TODO delete this
+//        editor.commit();
         String Login = sharedPreferences.getString("Login", "gsbs");
         if (!Login.equals("gsbs")) {
             finish();
@@ -67,12 +69,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }
 
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.putExtra("newBranch",newBranch);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-
-        finish();
+//        Intent intent = new Intent(context, MainActivity.class);
+//        intent.putExtra("newBranch",newBranch);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+//
+//        finish();
         phone_button = findViewById(R.id.phone_login);
         phone_button.setOnClickListener(this);
     }
@@ -110,7 +112,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
                 final String uid = mUser.getUid();
-                 editor.commit();
+                fireBaseId=uid;
+                editor.putString("fireBaseId",uid);
+                editor.commit();
+
                 Intent intent = new Intent(context, Profile.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);

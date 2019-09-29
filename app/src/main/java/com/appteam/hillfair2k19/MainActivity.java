@@ -24,7 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.VolleyError;
-import com.appteam.Wall.WallFragment;
+//import com.appteam.Wall.WallFragment;
 import com.appteam.fragments.ClubsFragment;
 import com.appteam.fragments.Coupons;
 import com.appteam.fragments.SponsersFragment;
@@ -80,24 +80,20 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
         fireBaseID = sharedPreferences.getString("fireBaseId",null);
-        //configuring cloudinary
-        Map config = new HashMap();
-        config.put("cloud_name", "dpxfdn3d8");
-        config.put("api_key", "172568498646598");
-        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
-        MediaManager.init(this, config);
+
 
         linkViews();
 
        FragmentManager fragmentManager=getSupportFragmentManager();
 
         final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction ();
-        final WallFragment faceSmash=new WallFragment(this);
+       // final WallFragment faceSmash=new WallFragment(this);
 
         LeaderboardFragment leaderboardFragment =new LeaderboardFragment();
 // work here to change Activity fragments (add, remove, etc.).  Example here of adding.
-        fragmentTransaction.add (R.id.fragmentHolder, faceSmash);
-        fragmentTransaction.commit();
+      //  fragmentTransaction.add (R.id.fragmentHolder, faceSmash);
+       // fragmentTransaction.commit();
+
         viewPager=findViewById(R.id.viewpager);
         final SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), MainActivity.this);
         viewPager.setAdapter(adapter);

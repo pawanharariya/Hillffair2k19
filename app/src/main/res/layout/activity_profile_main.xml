@@ -165,9 +165,8 @@
                 android:fontFamily="@font/psb"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
-                android:inputType="text"
                 android:maxLines="1"
-                android:editable="false"
+                android:enabled="false"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
@@ -198,11 +197,10 @@
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
-                android:inputType="text"
                 android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
-                android:editable="false"
+                android:enabled="false"
                 android:textSize="18sp" />
 
             <TextView
@@ -227,14 +225,13 @@
                 android:backgroundTint="#f3f3f3"
                 android:fontFamily="@font/psb"
                 android:paddingLeft="16dp"
-                android:inputType="text"
                 android:maxLines="1"
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
                 android:textSize="18sp"
-                android:editable="false"/>
+                android:enabled="false"/>
 
             <TextView
                 android:id="@+id/studentName"
@@ -346,7 +343,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/green_corner"
-                    android:visibility="invisible">
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/save"

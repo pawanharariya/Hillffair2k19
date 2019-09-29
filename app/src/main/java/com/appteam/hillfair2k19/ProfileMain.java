@@ -51,6 +51,7 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.google.protobuf.StringValue;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -67,6 +68,7 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.androidnetworking.AndroidNetworking.post;
+import static com.appteam.hillfair2k19.MainActivity.fireBaseID;
 
 public class ProfileMain extends AppCompatActivity {
 
@@ -84,7 +86,6 @@ public class ProfileMain extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
     LinearLayout loadPic, progress;
     RelativeLayout sumbit;
-    Boolean isFirstTime;
     private String Name, ContactNumber, Branch, RollNumber, referal, img_Url, base64b;
 
     public static String encodeTobase64(Bitmap image) {
@@ -106,7 +107,8 @@ public class ProfileMain extends AppCompatActivity {
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent i = new Intent(ProfileMain.this,MainActivity.class);
+                startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
             }
@@ -123,31 +125,13 @@ public class ProfileMain extends AppCompatActivity {
             }
         });
         initUI();
+        SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
+        String id = sharedPreferences.getString("fireBaseId", null);
+        getProfile(id);
 
-        SharedPreferences app_preferences = PreferenceManager
-                .getDefaultSharedPreferences(ProfileMain.this);
-
-        SharedPreferences.Editor editor = app_preferences.edit();
-
-        isFirstTime = app_preferences.getBoolean("isFirstTime", true);
-
-        if (isFirstTime) {
-
-        } else {
-            name1.setText(prefs.getString("name", null));
-            rollNumber1.setText(prefs.getString("rollNumber", null));
-            branch1.setText(prefs.getString("branch", null));
-            sumbit.setVisibility(View.VISIBLE);
-            name1.setEnabled(true);
-            rollNumber1.setEnabled(true);
-            branch1.setEnabled(true);
-
-        }
-        getProfile(MainActivity.fireBaseID);
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sumbit.setVisibility(View.VISIBLE);
                 changeProfile();
             }
         });
@@ -169,27 +153,21 @@ public class ProfileMain extends AppCompatActivity {
     }
 
     public void changeProfile() {
-//        name1.setText("");
-//        rollNumber1.setText("");
-//        branch1.setText("");
+        sumbit.setVisibility(View.VISIBLE);
         name1.setEnabled(true);
         rollNumber1.setEnabled(true);
         branch1.setEnabled(true);
-        prefs = getSharedPreferences("Editing_mode", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", "");
-        editor.putString("rollNumber", "");
-        editor.putString("branch", "");
+        SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("name", String.valueOf(name1.getText()));
+        editor.putString("branch", String.valueOf(branch1.getText()));
+        editor.putString("rollNo", String.valueOf(rollNumber1.getText()));
         editor.commit();
-
 
         buttonLoadImage = findViewById(R.id.profilePicture);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
-                prefs = getSharedPreferences("Editing_mode", Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("isFirstTime",false);
                 showPictureDialog();
             }
         });
@@ -199,7 +177,7 @@ public class ProfileMain extends AppCompatActivity {
     private void getProfile(String id) {
 
         // Log.d("url", getResources().getString(R.string.baseUrl) + "getprofile/" + id);
-        AndroidNetworking.get(getResources().getString(R.string.baseUrl) + "/User/" +id)
+        AndroidNetworking.get(getResources().getString(R.string.baseUrl) + "/User/" + id)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
                     @Override
@@ -321,6 +299,22 @@ public class ProfileMain extends AppCompatActivity {
             isHuman(selectedImage);
         }
 
+        SharedPreferences sharedPreferences=getSharedPreferences("number",MODE_PRIVATE);
+        sumbit.setVisibility(View.VISIBLE);
+        name1.setEnabled(true);
+        name1.setText(sharedPreferences.getString("name","Name"));
+        rollNumber1.setEnabled(true);
+        rollNumber1.setText(sharedPreferences.getString("rollNo","Roll Number"));
+        branch1.setEnabled(true);
+        branch1.setText(sharedPreferences.getString("branch","Branch"));
+        buttonLoadImage = findViewById(R.id.profilePicture);
+        buttonLoadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+                showPictureDialog();
+            }
+        });
+
     }
 
     public void isHuman(final Bitmap thumbnail) {
@@ -361,9 +355,10 @@ public class ProfileMain extends AppCompatActivity {
                                             }
 
                                         }
-                                        if (counter != 1)
+                                        if (counter != 1) {
                                             loadPic.setVisibility(View.GONE);
-                                        Toast.makeText(ProfileMain.this, "Not a Human Image!", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(ProfileMain.this, "Not a Human Image!", Toast.LENGTH_LONG).show();
+                                        }
                                     }
                                 })
                         .addOnFailureListener(
@@ -501,8 +496,11 @@ public class ProfileMain extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
+                SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
+                String id = sharedPreferences.getString("fireBaseId", null);
+
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("firebase_id", "123459");
+                params.put("firebase_id",id);
                 params.put("roll_number", "abcd");
                 params.put("branch", "csed");
                 params.put("mobile", "8888888888");
@@ -516,8 +514,12 @@ public class ProfileMain extends AppCompatActivity {
 
         };
         queue.add(stringRequest);
-
-        // TODO: make all textView and ImageView uneditable and submit button INVISIBLE
+        sumbit.setVisibility(View.GONE);
+        name1.setEnabled(false);
+        rollNumber1.setEnabled(false);
+        branch1.setEnabled(false);
+        buttonLoadImage = findViewById(R.id.profilePicture);
+        buttonLoadImage.setFocusable(false);
     }
 
     @Override

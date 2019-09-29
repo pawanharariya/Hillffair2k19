@@ -49,6 +49,7 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
+import com.google.protobuf.StringValue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -58,6 +59,7 @@ import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class Profile extends AppCompatActivity {
     private int GALLERY = 1, CAMERA = 2;
@@ -186,9 +188,10 @@ public class Profile extends AppCompatActivity {
             if (data != null) {
                 Uri photoUri = data.getData();
                 try {
+                    loadPic.setVisibility(View.VISIBLE);
                     selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                     isHuman(selectedImage);
-                    loadPic.setVisibility(View.GONE);
+
 
 
                 } catch (IOException e) {
@@ -197,9 +200,10 @@ public class Profile extends AppCompatActivity {
                 }
             }
         } else if (requestCode == CAMERA) {
+            loadPic.setVisibility(View.VISIBLE);
             selectedImage = (Bitmap) data.getExtras().get("data");
             isHuman(selectedImage);
-            loadPic.setVisibility(View.GONE);
+
         }
 
     }
@@ -227,7 +231,7 @@ public class Profile extends AppCompatActivity {
                                             List<FirebaseVisionPoint> faceContours = face.getContour(FirebaseVisionFaceContour.ALL_POINTS).getPoints();
                                             //Log.v("FaceContours",String.valueOf(faceContours));
                                             if (faceContours != null) {
-                                                loadPic.setVisibility(View.VISIBLE);
+
                                                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
                                                 selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, bs);
                                                 byteArray = bs.toByteArray();
@@ -238,6 +242,7 @@ public class Profile extends AppCompatActivity {
                                                 profilePicture.setImageBitmap(img);
                                                 Toast.makeText(Profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                                                 counter = 1;
+                                                loadPic.setVisibility(View.GONE);
                                             }
 
                                         }
@@ -436,10 +441,11 @@ public class Profile extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
-                String fireBaseId = sharedPreferences.getString("fireBaseId",null);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
+                String id = sharedPreferences.getString("fireBaseId",null);
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("firebase_id", fireBaseId);
+                params.put("firebase_id",id);
                 params.put("roll_number", RollNumber);
                 params.put("branch", Branch);
                 params.put("mobile", ContactNumber);
