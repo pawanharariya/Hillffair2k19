@@ -17,6 +17,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
@@ -71,18 +72,20 @@ public class ProfileMain extends AppCompatActivity {
 
     private ClipboardManager myClipboard;
     private ClipData myClip;
-    TextView textView,save;
+    TextView textView, save;
     TextView name1, rollNumber1, referral, branch1, mobile1, reffaralDone;
     CircleImageView profilemain, buttonLoadImage;
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 10;
     Bitmap selectedImage, img, bmp;
     String base64a, pass;
+    SharedPreferences prefs;
     private byte[] byteArray;
     private int PICK_PHOTO_CODE = 1046;
     private int GALLERY = 1, CAMERA = 2;
-    LinearLayout loadPic,progress;
+    LinearLayout loadPic, progress;
     RelativeLayout sumbit;
-    private String Name, ContactNumber,Branch,RollNumber,referal,img_Url,base64b;
+    Boolean isFirstTime;
+    private String Name, ContactNumber, Branch, RollNumber, referal, img_Url, base64b;
 
     public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;
@@ -98,7 +101,7 @@ public class ProfileMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_main);
         progress = findViewById(R.id.loadwall);
-        loadPic=findViewById(R.id.loadPic);
+        loadPic = findViewById(R.id.loadPic);
         textView = findViewById(R.id.referral);
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +123,27 @@ public class ProfileMain extends AppCompatActivity {
             }
         });
         initUI();
-        getProfile("1");
+
+        SharedPreferences app_preferences = PreferenceManager
+                .getDefaultSharedPreferences(ProfileMain.this);
+
+        SharedPreferences.Editor editor = app_preferences.edit();
+
+        isFirstTime = app_preferences.getBoolean("isFirstTime", true);
+
+        if (isFirstTime) {
+
+        } else {
+            name1.setText(prefs.getString("name", null));
+            rollNumber1.setText(prefs.getString("rollNumber", null));
+            branch1.setText(prefs.getString("branch", null));
+            sumbit.setVisibility(View.VISIBLE);
+            name1.setEnabled(true);
+            rollNumber1.setEnabled(true);
+            branch1.setEnabled(true);
+
+        }
+        getProfile("1");//put Firebase ID here
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,46 +169,31 @@ public class ProfileMain extends AppCompatActivity {
     }
 
     public void changeProfile() {
+//        name1.setText("");
+//        rollNumber1.setText("");
+//        branch1.setText("");
+        name1.setEnabled(true);
+        rollNumber1.setEnabled(true);
+        branch1.setEnabled(true);
+        prefs = getSharedPreferences("Editing_mode", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("name", "");
+        editor.putString("rollNumber", "");
+        editor.putString("branch", "");
+        editor.commit();
+
+
         buttonLoadImage = findViewById(R.id.profilePicture);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View arg0) {
+                prefs = getSharedPreferences("Editing_mode", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putBoolean("isFirstTime",false);
                 showPictureDialog();
             }
         });
-        name1.setText("");
-        rollNumber1.setText("");
-        branch1.setText("");
 
-
-    }
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        savedInstanceState.putBoolean("MyBoolean", true);
-        savedInstanceState.putDouble("myDouble", 1.9);
-        savedInstanceState.putInt("MyInt", 1);
-        savedInstanceState.putString("MyString", "Welcome back to Android");
-        sumbit.setVisibility(View.VISIBLE);
-        name1.setText("");
-        rollNumber1.setText("");
-        branch1.setText("");
-
-        // etc.
-    }
-
-    @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
-
-        sumbit.setVisibility(View.VISIBLE);
-        name1.setText("");
-        rollNumber1.setText("");
-        branch1.setText("");
-        //changeProfile();
     }
 
     private void getProfile(String id) {
@@ -384,8 +392,8 @@ public class ProfileMain extends AppCompatActivity {
         mobile1 = findViewById(R.id.mobile1);
         profilemain = findViewById(R.id.profilePicture);
         reffaralDone = findViewById(R.id.referralDone);
-        sumbit=findViewById(R.id.submit);
-        save=findViewById(R.id.save);
+        sumbit = findViewById(R.id.submit);
+        save = findViewById(R.id.save);
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -452,8 +460,9 @@ public class ProfileMain extends AppCompatActivity {
                             @Override
                             public void onError(String requestId, ErrorInfo error) {
                                 Toast.makeText(ProfileMain.this, "Error", Toast.LENGTH_SHORT).show();
-                                Log.v("ErrorCloud",String.valueOf(error));
+                                Log.v("ErrorCloud", String.valueOf(error));
                             }
+
                             @Override
                             public void onReschedule(String requestId, ErrorInfo error) {
                             }
@@ -481,33 +490,34 @@ public class ProfileMain extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(ProfileMain.this,response,Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProfileMain.this, response, Toast.LENGTH_LONG).show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(ProfileMain.this,error.toString(),Toast.LENGTH_LONG).show();
+                        Toast.makeText(ProfileMain.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("firebase_id","123459");
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("firebase_id", "123459");
                 params.put("roll_number", "abcd");
-                params.put("branch","csed");
-                params.put("mobile","8888888888");
-                params.put("referral_friend","1234");
-                params.put("name","qq");
-                params.put("gender","ww");
-                params.put("face_smash_status","0");
-                params.put("image_url",img_Url);
+                params.put("branch", "csed");
+                params.put("mobile", "8888888888");
+                params.put("referral_friend", "1234");
+                params.put("name", "qq");
+                params.put("gender", "ww");
+                params.put("face_smash_status", "0");
+                params.put("image_url", img_Url);
                 return params;
             }
 
         };
         queue.add(stringRequest);
 
+        // TODO: make all textView and ImageView uneditable and submit button INVISIBLE
     }
 
     @Override

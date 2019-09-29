@@ -29,8 +29,8 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         if (position == 0) {
             return new SponsersFragment(activity);
-//        } else if (position == 1) {
-//            return new Quiz_QnA(activity);
+        } else if (position == 1) {
+            return new QuizCategories(activity);
  //       } else if (position == 2) {
    //         return new FaceSmash(activity);
         } else if (position == 1) {

@@ -82,6 +82,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //configuring cloudinary
+        Map config = new HashMap();
+        config.put("cloud_name", "dpxfdn3d8");
+        config.put("api_key", "172568498646598");
+        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
+        MediaManager.init(this, config);
+
         linkViews();
 
        FragmentManager fragmentManager=getSupportFragmentManager();
@@ -199,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this,ProfileMain.class));
+                startActivity(new Intent(MainActivity.this,Profile.class));
             }
         });
     //    FragmentManager fragmentManager = getSupportFragmentManager();

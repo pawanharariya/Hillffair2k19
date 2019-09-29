@@ -232,6 +232,9 @@ public class Profile extends AppCompatActivity {
                                                 Toast.makeText(Profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                                                 counter = 1;
                                             }
+//                                            else
+//                                                loadPic.setVisibility(View.GONE);
+//                                                Toast.makeText(Profile.this, "Not a Human Image!", Toast.LENGTH_LONG).show();
 
                                         }
                                         if (counter != 1)
@@ -312,7 +315,6 @@ public class Profile extends AppCompatActivity {
         Branch = String.valueOf(branch.getText());
         referal = String.valueOf(referral.getText());
         ContactNumber = contactNumber.getText().toString();
-        Log.d("roll", RollNumber);
         if (ContactNumber == null)
             ContactNumber = "7587524626";
         if (Name.length() == 0) {
@@ -321,7 +323,6 @@ public class Profile extends AppCompatActivity {
             final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
             final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            pass = "qqqq";
             if (pass == "") {
                 Toast.makeText(Profile.this, "Please select profile picture", Toast.LENGTH_SHORT).show();
             } else if (Name == "" || RollNumber == "" || Branch == "" || ContactNumber == "" || pass == "" || gender == "") {
@@ -336,7 +337,7 @@ public class Profile extends AppCompatActivity {
                 editor.putString("Image", pass);
                 editor.putString("Gender", gender);
                 editor.commit();
-//                progress.setVisibility(View.VISIBLE);
+//               progress.setVisibility(View.VISIBLE);
                 String requestId = MediaManager.get().upload(byteArray)
                         .unsigned("xf7gsy1r")
                         .callback(new UploadCallback() {
@@ -376,7 +377,7 @@ public class Profile extends AppCompatActivity {
         }
     }
 
-    public void post(String ContactNumber) {
+    public void post(final String ContactNumber) {
         try {
             // byte[] data = referal.getBytes("UTF-8");
             base64a = referal;
@@ -405,7 +406,7 @@ public class Profile extends AppCompatActivity {
 //                });
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/User/",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/User",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -420,14 +421,16 @@ public class Profile extends AppCompatActivity {
                 }){
             @Override
             protected Map<String,String> getParams(){
+                Log.d("save",Name + "/" + RollNumber + "/" + ContactNumber+"/"+referal+"/"+gender+"/"+Branch+"/"+imgUrl);
+
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("firebase_id","123459");
-                params.put("roll_number", "abcd");
-                params.put("branch","csed");
-                params.put("mobile","8888888888");
-                params.put("referral_friend","1234");
-                params.put("name","qq");
-                params.put("gender","ww");
+                params.put("firebase_id","10011");
+                params.put("roll_number", RollNumber);
+                params.put("branch",Branch);
+                params.put("mobile",ContactNumber);
+                params.put("referral_friend",referal);
+                params.put("name",Name);
+                params.put("gender","MALE");
                 params.put("face_smash_status","0");
                 params.put("image_url",imgUrl);
                 return params;

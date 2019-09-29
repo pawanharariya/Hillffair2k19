@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="match_parent">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:orientation="horizontal"
-        >
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Redeem Your Candies here"
-        android:fontFamily="@font/ps"
-        android:layout_gravity="center"
-        android:paddingBottom="8dp"
-        android:paddingLeft="16dp"
-        android:paddingRight="30dp"
-        android:paddingTop="8dp"
-        android:textColor="@color/black"
-        android:textSize="15sp"/>
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/ic_candies"
-        android:layout_gravity="center" />
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/ps"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="8dp"
+            android:text="Redeem Your Candies here"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            app:srcCompat="@drawable/ic_candies" />
+
         <TextView
             android:id="@+id/candies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="0"
-            android:fontFamily="@font/ps"
             android:layout_gravity="center"
-            android:paddingBottom="8dp"
+            android:fontFamily="@font/ps"
+            android:hint="0"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp"
             android:paddingTop="8dp"
+            android:paddingRight="16dp"
+            android:paddingBottom="8dp"
             android:textColor="@color/black"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
     </LinearLayout>
 
     <ScrollView
@@ -51,147 +53,167 @@
         android:layout_below="@id/top"
         android:scrollbars="none">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_margin="16dp">
+            android:layout_height="match_parent">
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:padding="10dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:rotation="45"
-                    android:id="@+id/coupon1"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_coupon"/>
-                <ImageView
-                    android:layout_width="0dp"
-                    android:padding="10dp"
-                    android:layout_weight="1"
-                    android:id="@+id/coupon2"
-                    android:rotation="45"
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:id="@+id/coupon1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:rotation="45"
+                        app:srcCompat="@drawable/ic_coupon" />
+
+                    <ImageView
+                        android:id="@+id/coupon2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:rotation="45"
+                        app:srcCompat="@drawable/ic_coupon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_coupon"/>
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:id="@+id/coupon3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:rotation="45"
+                        app:srcCompat="@drawable/ic_coupon" />
+
+                    <ImageView
+                        android:id="@+id/coupon4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:rotation="45"
+                        app:srcCompat="@drawable/ic_coupon" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp">
+
+                    <ImageView
+                        android:id="@+id/coupon5"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:rotation="45"
+                        app:srcCompat="@drawable/ic_coupon" />
+
+                    <ImageView
+                        android:id="@+id/coupon6"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:rotation="45"
+                        app:srcCompat="@drawable/ic_coupon" />
+                </LinearLayout>
             </LinearLayout>
-            <LinearLayout
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:padding="10dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:rotation="45"
-                    android:id="@+id/coupon3"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_coupon"/>
-                <ImageView
-                    android:layout_width="0dp"
-                    android:padding="10dp"
-                    android:rotation="45"
-                    android:layout_weight="1"
-                    android:id="@+id/coupon4"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_coupon"/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp">
-                <ImageView
-                    android:padding="10dp"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:rotation="45"
-                    android:id="@+id/coupon5"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_coupon"/>
-                <ImageView
-                    android:layout_width="0dp"
-                    android:padding="10dp"
-                    android:rotation="45"
-                    android:layout_weight="1"
-                    android:id="@+id/coupon6"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_coupon"/>
-            </LinearLayout>
-        </LinearLayout>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/top">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_margin="16dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+                    android:layout_margin="16dp"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="220dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Helllo" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="220dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Helllo" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Helllo" />
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="220dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Helllo" />
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="200dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Helllo" />
+                    </LinearLayout>
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="220dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Helllo" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
 
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="220dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:padding="10dp"
-                android:text="Helllo" />
-            <TextView
-                android:padding="10dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_height="220dp"
-                android:text="Helllo"/>
-        </LinearLayout>
-        </LinearLayout>
-    </FrameLayout>
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="220dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Helllo" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="220dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Helllo" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="220dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Helllo" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="220dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:text="Helllo" />
+                    </LinearLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

@@ -17,7 +17,6 @@
         android:theme="@style/AppTheme" >
        <!-- <activity android:name="com.appteam.adapters.ClubAdapter"></activity>-->
         <activity android:name=".Quiz_QnA" />
-        <activity android:name=".QuizCategories" />
         <activity android:name=".ProfileMain"></activity>
         <activity android:name=".Profile"></activity>
         <activity android:name=".MainActivity">

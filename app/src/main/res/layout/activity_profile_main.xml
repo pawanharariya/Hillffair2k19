@@ -153,7 +153,7 @@
                 android:textSize="17sp" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/name1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,6 +165,9 @@
                 android:fontFamily="@font/psb"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
+                android:inputType="text"
+                android:maxLines="1"
+                android:editable="false"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
@@ -182,7 +185,7 @@
                 android:textSize="17sp" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/rollNumber1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -195,8 +198,11 @@
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
+                android:editable="false"
                 android:textSize="18sp" />
 
             <TextView
@@ -210,7 +216,7 @@
                 android:textSize="17sp" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/branch1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -221,11 +227,14 @@
                 android:backgroundTint="#f3f3f3"
                 android:fontFamily="@font/psb"
                 android:paddingLeft="16dp"
+                android:inputType="text"
+                android:maxLines="1"
                 android:paddingTop="8dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:editable="false"/>
 
             <TextView
                 android:id="@+id/studentName"
