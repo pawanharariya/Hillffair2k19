@@ -30,15 +30,14 @@ import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.android.volley.VolleyError;
-import com.appteam.Wall.WallFragment;
+//import com.appteam.Wall.WallFragment;
 import com.appteam.fragments.ClubsFragment;
 import com.appteam.fragments.Coupons;
 import com.appteam.fragments.SponsersFragment;
-<<<<<<< HEAD
+
 import com.appteam.hillfair2k19.ui.home.HomeFragment;
 import com.appteam.hillfair2k19.ui.notifications.NotificationsFragment;
-=======
->>>>>>> ec728309429f919f3a3b4f0f8c8b057ab6b0d107
+
 import com.cloudinary.android.MediaManager;
 import com.schibsted.spain.parallaxlayerlayout.ParallaxLayerLayout;
 import com.squareup.picasso.Picasso;
@@ -135,14 +134,41 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
         fireBaseID = sharedPreferences.getString("fireBaseId",null);
 
-        //configuring cloudinary
-        Map config = new HashMap();
-        config.put("cloud_name", "dpxfdn3d8");
-        config.put("api_key", "172568498646598");
-        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
-        MediaManager.init(this, config);
+
 
         linkViews();
+
+       FragmentManager fragmentManager=getSupportFragmentManager();
+
+        final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction ();
+       // final WallFragment faceSmash=new WallFragment(this);
+
+        LeaderboardFragment leaderboardFragment =new LeaderboardFragment();
+// work here to change Activity fragments (add, remove, etc.).  Example here of adding.
+      //  fragmentTransaction.add (R.id.fragmentHolder, faceSmash);
+       // fragmentTransaction.commit();
+
+        viewPager=findViewById(R.id.viewpager);
+        final SimpleFragmentPagerAdapter adapter = new SimpleFragmentPagerAdapter(getSupportFragmentManager(), MainActivity.this);
+        viewPager.setAdapter(adapter);
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+        //configuring cloudinary
+//         Map config = new HashMap();
+//         config.put("cloud_name", "dpxfdn3d8");
+//         config.put("api_key", "172568498646598");
+//         config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
+//         MediaManager.init(this, config);
+
+//         linkViews();
+
 
 
         FragmentManager fragmentManager=getSupportFragmentManager();
