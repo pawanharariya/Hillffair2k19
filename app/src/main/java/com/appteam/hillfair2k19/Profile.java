@@ -97,6 +97,13 @@ public class Profile extends AppCompatActivity {
         AndroidNetworking.initialize(getApplicationContext());
         progress = findViewById(R.id.loadwall);
         loadPic = findViewById(R.id.loadPic);
+        profilePicture=findViewById(R.id.profilePicture);
+        profilePicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showPictureDialog();
+            }
+        });
         buttonLoadImage = findViewById(R.id.galleryView);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
 
@@ -224,11 +231,7 @@ public class Profile extends AppCompatActivity {
                                         int counter = 0;
                                         for (FirebaseVisionFace face : faces) {
 
-//                                            FirebaseVisionFaceLandmark leftEar = face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EYE);
-//                                            Log.d("Face Contours",String.valueOf(leftEar));
-//                                            Toast.makeText(MainActivity.this, "ABCD", Toast.LENGTH_SHORT).show();
                                             List<FirebaseVisionPoint> faceContours = face.getContour(FirebaseVisionFaceContour.ALL_POINTS).getPoints();
-                                            //Log.v("FaceContours",String.valueOf(faceContours));
                                             if (faceContours != null) {
 
                                                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
@@ -241,6 +244,7 @@ public class Profile extends AppCompatActivity {
                                                 profilePicture.setImageBitmap(img);
                                                 Toast.makeText(Profile.this, "Image Saved!", Toast.LENGTH_SHORT).show();
                                                 counter = 1;
+                                                buttonLoadImage.setVisibility(View.GONE);
                                                 loadPic.setVisibility(View.GONE);
                                             }
 
@@ -331,8 +335,6 @@ public class Profile extends AppCompatActivity {
         else if (female.isSelected())
             gender = "FEMALE";
 
-        if (ContactNumber == null)
-            ContactNumber = "7587524626";
         if (Name.length() == 0) {
             Toast.makeText(Profile.this, "Seems You Didn`t enter all the details", Toast.LENGTH_SHORT).show();
         } else {
@@ -352,6 +354,7 @@ public class Profile extends AppCompatActivity {
                 editor.putString("Phone", ContactNumber);
                 editor.putString("Image", pass);
                 editor.putString("Gender", gender);
+                editor.putString("Referral", referal);
                 editor.commit();
                 progress.setVisibility(View.VISIBLE);
                 String requestId = MediaManager.get().upload(byteArray)
@@ -369,13 +372,11 @@ public class Profile extends AppCompatActivity {
                             public void onSuccess(String requestId, Map resultData) {
                                 System.out.println(resultData.get("url"));
                                 imgUrl = String.valueOf(resultData.get("url"));
-                                Toast.makeText(Profile.this, imgUrl + "ABCD", Toast.LENGTH_SHORT).show();
                                 post(ContactNumber);
-                                startActivity(new Intent(Profile.this, MainActivity.class));
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
-
                                 editor.putString("ImageURL", String.valueOf(resultData.get("url")));
                                 editor.commit();
+                                startActivity(new Intent(Profile.this, MainActivity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             }
 
@@ -407,28 +408,15 @@ public class Profile extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        // System.out.print(getString(R.string.baseUrl) + "User/" + Name + "/" + RollNumber + "/" + ContactNumber);//22
-//        AndroidNetworking.get(getString(R.string.baseUrl) + "/User/")
-//                .build()
-//                .getAsJSONArray(new JSONArrayRequestListener() {
-//                    @Override
-//                    public void onResponse(JSONArray response) {
-//                        progress.setVisibility(View.GONE);
-//                        // do anything with response
-//                    }
-//
-//                    @Override
-//                    public void onError(ANError error) {
-//                        // handle error
-//                    }
-//                });
         RequestQueue queue = Volley.newRequestQueue(this);
-
         StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/User",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-
+                        SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
+                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                        editor.putString("ProfileCreated","true");
+                        editor.commit();
                         progress.setVisibility(View.GONE);
                     }
                 },

@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
             }
 
             @Override
@@ -162,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         profile = findViewById(R.id.profile);
 
         SharedPreferences prefs = getSharedPreferences("number", Context.MODE_PRIVATE);
-        String check2 = prefs.getString("Image", "https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png");
+        String check2 = prefs.getString("ImageURL", "https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png");
         if (!check2.equals("https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png")) {
             Bitmap img = setProfile(check2);
             profile.setImageBitmap(img);
@@ -186,14 +187,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         animate(couponLinearLayout, couponTextView);
         currentSelected=0;
     }
-
-    //configuring cloudinary
-//         Map config = new HashMap();
-//         config.put("cloud_name", "dpxfdn3d8");
-//         config.put("api_key", "172568498646598");
-//         config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
-//         MediaManager.init(this, config);
-
 
 //            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 

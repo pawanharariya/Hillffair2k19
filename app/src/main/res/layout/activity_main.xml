@@ -10,13 +10,15 @@
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewpager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="50dp"/>
+
     <FrameLayout
         android:id="@+id/fragmentHolder"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
-
     </FrameLayout>
 
     <LinearLayout
@@ -26,41 +28,41 @@
         android:background="@color/grey"
         android:orientation="horizontal">
 
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:visibility="gone"
-    android:orientation="horizontal">
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-            android:elevation="50dp"
-            android:layout_margin="4dp"
-            android:id="@+id/core"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="50dp"
-            android:layout_margin="4dp"
-            android:id="@+id/sponsors"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="50dp"
-            android:layout_margin="4dp"
-            android:id="@+id/club"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elevation="50dp"
-            android:layout_margin="4dp"
-            android:id="@+id/reward"
-            />
-</LinearLayout>
+            <Button
+                android:id="@+id/core"
+                android:layout_width="wrap_content"
+
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="50dp" />
+
+            <Button
+                android:id="@+id/sponsors"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="50dp" />
+
+            <Button
+                android:id="@+id/club"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="50dp" />
+
+            <Button
+                android:id="@+id/reward"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="4dp"
+                android:elevation="50dp" />
+        </LinearLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -360,6 +362,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/facesmash"
                 android:layout_width="wrap_content"
@@ -371,6 +374,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/leaderboard"
                 android:layout_width="wrap_content"
@@ -382,6 +386,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/coreTeamNav"
                 android:layout_width="wrap_content"
@@ -393,6 +398,7 @@
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:visibility="gone" />
+
             <TextView
                 android:id="@+id/clubsNav"
                 android:layout_width="wrap_content"
@@ -453,10 +459,10 @@
             android:layout_width="220dp"
             android:layout_height="220dp"
             android:layout_alignParentLeft="true"
-            android:layout_marginBottom="-100dp"
             android:layout_marginLeft="-60dp"
-            android:layout_marginRight="-100dp"
             android:layout_marginTop="-84dp"
+            android:layout_marginRight="-100dp"
+            android:layout_marginBottom="-100dp"
             app:lottie_rawRes="@raw/menu" />
 
         <View
@@ -473,8 +479,8 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="32dp"
             android:layout_marginTop="13dp"
+            android:layout_marginRight="32dp"
             android:src="@color/black" />
 
         <TextView
@@ -482,8 +488,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:fontFamily="@font/psb"
             android:text="HILL'FFAIR 2018"
             android:textColor="@color/dark_grey"

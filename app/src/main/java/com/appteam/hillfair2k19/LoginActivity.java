@@ -47,26 +47,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //configuring cloudinary
-//        Map config = new HashMap();
-//        config.put("cloud_name", "dpxfdn3d8");
-//        config.put("api_key", "172568498646598");
-//        config.put("api_secret", "NNa_bFKyVxW0AB30wL8HVoFxeSs");
-//        MediaManager.init(this, config);
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
         final SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.putString("fireBaseId","12345");//TODO delete this
-//        editor.commit();
-        String Login = sharedPreferences.getString("Login", "gsbs");
-        if (!Login.equals("gsbs")) {
+        String Login = sharedPreferences.getString("Login", "false");
+        String Profile = sharedPreferences.getString("ProfileCreated", "false");
+        if (Login.equals("Complete") && Profile.equals("true")) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
+        } else if (Login.equals("Complete")&& Profile.equals("false")) {
+            finish();
+            startActivity(new Intent(this, Profile.class));
         } else {
             setContentView(R.layout.activity_login);
-
         }
 
 //        Intent intent = new Intent(context, MainActivity.class);
@@ -106,14 +101,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Login", "Complete");
-
                 Toast.makeText(LoginActivity.this, "Authenticated.",
                         Toast.LENGTH_SHORT).show();
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
 
                 final String uid = mUser.getUid();
-                fireBaseId=uid;
-                editor.putString("fireBaseId",uid);
+                fireBaseId = uid;
+                editor.putString("fireBaseId", uid);
                 editor.commit();
 
                 Intent intent = new Intent(context, Profile.class);
