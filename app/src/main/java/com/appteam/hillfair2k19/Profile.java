@@ -97,7 +97,7 @@ public class Profile extends AppCompatActivity {
         AndroidNetworking.initialize(getApplicationContext());
         progress = findViewById(R.id.loadwall);
         loadPic = findViewById(R.id.loadPic);
-        profilePicture=findViewById(R.id.profilePicture);
+        profilePicture = findViewById(R.id.profilePicture);
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -372,11 +372,10 @@ public class Profile extends AppCompatActivity {
                             public void onSuccess(String requestId, Map resultData) {
                                 System.out.println(resultData.get("url"));
                                 imgUrl = String.valueOf(resultData.get("url"));
-                                post(ContactNumber);
+
                                 editor.putString("ImageURL", String.valueOf(resultData.get("url")));
                                 editor.commit();
-                                startActivity(new Intent(Profile.this, MainActivity.class));
-                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                                post(ContactNumber);
                                 finish();
                             }
 
@@ -413,9 +412,9 @@ public class Profile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
-                        editor.putString("ProfileCreated","true");
+                        editor.putString("ProfileCreated", "true");
                         editor.commit();
                         progress.setVisibility(View.GONE);
                     }
@@ -428,7 +427,6 @@ public class Profile extends AppCompatActivity {
                 }) {
             @Override
             protected Map<String, String> getParams() {
-
                 SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
                 String id = sharedPreferences.getString("fireBaseId", null);
                 Map<String, String> params = new HashMap<String, String>();

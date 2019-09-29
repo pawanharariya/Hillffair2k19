@@ -52,34 +52,29 @@ import java.util.Map;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    IResult mResultCallback;
-    IResult mResultCallbackAndroidNeworking;
-
-    CircleImageView profile;
-    ImageButton homeButton;
-    ImageButton gamesButton;
-    ImageButton scheduleButton;
-    ImageButton couponButton;
-
-    TextView homeTextView;
-    TextView gamesTextView;
-    TextView scheduleTextView;
-    TextView couponTextView;
-
-    LinearLayout homeLinearLayout;
-    LinearLayout gameLinearLayout;
-    LinearLayout scheduleLinearLayout;
-    LinearLayout couponLinearLayout;
-    ViewPager viewPager;
-    ParallaxLayerLayout.TranslationUpdater sensorTranslationUpdater;
-
     public static int home;
     public static int games;
     public static int schedule;
     public static int coupon;
     public static String fireBaseID;
     public static int currentSelected;
-
+    IResult mResultCallback;
+    IResult mResultCallbackAndroidNeworking;
+    CircleImageView profile;
+    ImageButton homeButton;
+    ImageButton gamesButton;
+    ImageButton scheduleButton;
+    ImageButton couponButton;
+    TextView homeTextView;
+    TextView gamesTextView;
+    TextView scheduleTextView;
+    TextView couponTextView;
+    LinearLayout homeLinearLayout;
+    LinearLayout gameLinearLayout;
+    LinearLayout scheduleLinearLayout;
+    LinearLayout couponLinearLayout;
+    ViewPager viewPager;
+    ParallaxLayerLayout.TranslationUpdater sensorTranslationUpdater;
     Button sponsors, club, coreteam, reward;
 
 
@@ -147,7 +142,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
             }
 
             @Override
@@ -163,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         profile = findViewById(R.id.profile);
 
         SharedPreferences prefs = getSharedPreferences("number", Context.MODE_PRIVATE);
-        String check2 = prefs.getString("ImageURL", "https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png");
+        String check2 = prefs.getString("Image", "https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png");
         if (!check2.equals("https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png")) {
             Bitmap img = setProfile(check2);
             profile.setImageBitmap(img);
@@ -178,19 +172,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        home=homeLinearLayout.getMeasuredWidth();
-        games=gameLinearLayout.getMeasuredWidth();
-        schedule=scheduleLinearLayout.getMeasuredWidth();
-        coupon=couponLinearLayout.getMeasuredWidth();
+        home = homeLinearLayout.getMeasuredWidth();
+        games = gameLinearLayout.getMeasuredWidth();
+        schedule = scheduleLinearLayout.getMeasuredWidth();
+        coupon = couponLinearLayout.getMeasuredWidth();
         animate(gameLinearLayout, gamesTextView);
         animate(scheduleLinearLayout, scheduleTextView);
         animate(couponLinearLayout, couponTextView);
-        currentSelected=0;
+        currentSelected = 0;
     }
-
-//            final FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-
 //            WallFragment wallFragment = new WallFragment(this);
 //        fragmentTransaction.replace(R.id.fragmentHolder,wallFragment );
 //        fragmentTransaction.commit();
@@ -243,9 +233,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 //        gameLinearLayout.getBackground().setColorFilter(getResources().getColor(R.color.colorPrimaryLight), PorterDuff.Mode.SRC_ATOP);
 //
 //        gameLinearLayout.getBackground().setColorFilter(Color.parseColor("#00FFFFFF"), PorterDuff.Mode.SRC_ATOP);
-
-
-
 
 
 //        Intent intent=new Intent(MainActivity.this,QuizCategories.class);
@@ -827,3 +814,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
+
+
