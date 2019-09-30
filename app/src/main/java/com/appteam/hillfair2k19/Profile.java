@@ -412,19 +412,11 @@ public class Profile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-                        SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
+     SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("ProfileCreated", "true");
                         editor.commit();
-<<<<<<< HEAD
-=======
-
->>>>>>> master
-                        progress.setVisibility(View.GONE);
+    progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
