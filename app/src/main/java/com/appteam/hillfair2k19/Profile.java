@@ -372,7 +372,6 @@ public class Profile extends AppCompatActivity {
                             public void onSuccess(String requestId, Map resultData) {
                                 System.out.println(resultData.get("url"));
                                 imgUrl = String.valueOf(resultData.get("url"));
-
                                 editor.putString("ImageURL", String.valueOf(resultData.get("url")));
                                 editor.commit();
                                 post(ContactNumber);
@@ -412,11 +411,11 @@ public class Profile extends AppCompatActivity {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-     SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
+                        SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("ProfileCreated", "true");
                         editor.commit();
-    progress.setVisibility(View.GONE);
+                        progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {

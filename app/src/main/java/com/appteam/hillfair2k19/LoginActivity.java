@@ -95,12 +95,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             if (resultCode == RESULT_OK) {
                 final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString("Login", "Complete");
 
                 Toast.makeText(LoginActivity.this, "Authenticated.",Toast.LENGTH_SHORT).show();
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String uid = mUser.getUid();
                 fireBaseId = uid;
+                editor.putString("Login", "Complete");
                 editor.putString("fireBaseId", uid);
                 editor.commit();
 
