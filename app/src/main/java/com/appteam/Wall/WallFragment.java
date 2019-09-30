@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.appteam.hillfair2k19.LoginActivity;
 import com.appteam.hillfair2k19.ProfileMain;
 import com.appteam.hillfair2k19.R;
 import com.cloudinary.android.MediaManager;
@@ -78,6 +79,8 @@ public class WallFragment extends Fragment implements View.OnClickListener {
     private RecyclerView fifthRec;
     private List<wall> wallList = new ArrayList<>();
     private Activity activity;
+    private String id;
+
 
     public WallFragment() {
     }
@@ -89,6 +92,8 @@ public class WallFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("number", Context.MODE_PRIVATE);
+        id = sharedPreferences.getString("fireBaseId", null);
     }
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -106,6 +111,7 @@ public class WallFragment extends Fragment implements View.OnClickListener {
         fifthRec.setAdapter(wallAdapter);
         getData();
         swiperefresh = view.findViewById(com.appteam.hillfair2k19.R.id.swiperefresh);
+
         swiperefresh.setOnRefreshListener(
                 new SwipeRefreshLayout.OnRefreshListener() {
                     @Override
@@ -133,15 +139,14 @@ public class WallFragment extends Fragment implements View.OnClickListener {
     void getData() {
         loadwall.setVisibility(View.VISIBLE);
         wallList.clear();
-        firebase_id = "12345";
-        AndroidNetworking.get(getActivity().getString(R.string.baseUrl) + "/feed/1/" + firebase_id )
+        AndroidNetworking.get(getActivity().getString(R.string.baseUrl) + "/feed/1/" + id )
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
 
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            loadwall.setVisibility(View.GONE);
+
                             System.out.println(response);
                             Log.e("response",response.toString());
                             JSONArray feed=response.getJSONArray("feed");
@@ -153,6 +158,7 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                                 int liked = json.getInt("liked");
                                 String postid=json.getString("post_id");
                                 wallList.add(new wall(imgUrl, likes , liked,postid));
+                                loadwall.setVisibility(View.GONE);
                             }
                             wallAdapter.notifyDataSetChanged();
 
@@ -202,6 +208,7 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                     ByteArrayOutputStream bs = new ByteArrayOutputStream();
                     selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, bs);
                     byteArray = bs.toByteArray();
+                    loadwall.setVisibility(View.VISIBLE);
                     String requestId = MediaManager.get().upload(byteArray)
                             .unsigned("xf7gsy1r")
                             .callback(new UploadCallback() {
@@ -219,6 +226,7 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                                     System.out.println(resultData.get("url"));
                                     img_Url = String.valueOf(resultData.get("url"));
                                     post();
+
                                 }
 
                                 @Override
@@ -246,7 +254,8 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(activity, "Posted", Toast.LENGTH_SHORT).show();
+                        getData();
+                        loadwall.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
@@ -258,14 +267,12 @@ public class WallFragment extends Fragment implements View.OnClickListener {
             @Override
             protected Map<String,String> getParams(){
                 Map<String,String> params = new HashMap<String, String>();
-                params.put("firebase_id",firebase_id);
+                params.put("firebase_id",id);
                 params.put("image_url",img_Url);
                 return params;
             }
         };
         queue.add(stringRequest);
-
-
     }
 
 }

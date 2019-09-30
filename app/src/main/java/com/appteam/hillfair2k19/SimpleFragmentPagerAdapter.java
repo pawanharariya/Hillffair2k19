@@ -39,8 +39,6 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
             return new ClubsFragment(activity);
         } else if (position == 5) {
             return new coreteam(activity);
-        } else if (position == 6) {
-            return new Coupons(activity);
         }
         return new SponsersFragment(activity);
 
@@ -49,7 +47,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return 7;
     }
 
 

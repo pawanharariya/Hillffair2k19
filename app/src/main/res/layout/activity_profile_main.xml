@@ -8,6 +8,57 @@
     android:orientation="vertical"
     tools:context=".ProfileMain">
 
+    <LinearLayout
+        android:id="@+id/loadwall"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#a0000000"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/psb"
+            android:text="Saving Your Profile"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/loadPic"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#a0000000"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_centerInParent="true"
+            android:layout_margin="16dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/psb"
+            android:text="Detecting Your Image"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </LinearLayout>
+
     <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
@@ -50,56 +101,6 @@
 
     </RelativeLayout>
 
-    <LinearLayout
-        android:id="@+id/loadwall"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#a0000000"
-        android:clickable="true"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/psb"
-            android:text="Saving"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/loadPic"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="#a0000000"
-        android:clickable="true"
-        android:elevation="10dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:visibility="gone">
-
-        <ProgressBar
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerInParent="true"
-            android:layout_margin="16dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/psb"
-            android:text="Detecting Your Image"
-            android:textColor="@color/white"
-            android:textSize="15sp" />
-    </LinearLayout>
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -245,7 +246,7 @@
                 android:textSize="17sp" />
 
 
-            <TextView
+            <EditText
                 android:id="@+id/mobile1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -257,10 +258,12 @@
                 android:fontFamily="@font/psb"
                 android:paddingLeft="16dp"
                 android:paddingTop="8dp"
+                android:maxLines="1"
                 android:paddingRight="16dp"
                 android:paddingBottom="8dp"
                 android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textSize="18sp"
+                android:enabled="false"/>
 
             <TextView
                 android:layout_width="wrap_content"

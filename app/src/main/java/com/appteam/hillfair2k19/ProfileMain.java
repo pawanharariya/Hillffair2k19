@@ -157,6 +157,7 @@ public class ProfileMain extends AppCompatActivity {
         name1.setEnabled(true);
         rollNumber1.setEnabled(true);
         branch1.setEnabled(true);
+        mobile1.setEnabled(true);
         SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", String.valueOf(name1.getText()));
@@ -175,8 +176,6 @@ public class ProfileMain extends AppCompatActivity {
     }
 
     private void getProfile(String id) {
-
-        // Log.d("url", getResources().getString(R.string.baseUrl) + "getprofile/" + id);
         AndroidNetworking.get(getResources().getString(R.string.baseUrl) + "/User/" + id)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -189,7 +188,7 @@ public class ProfileMain extends AppCompatActivity {
                             rollNumber1.setText((String) (response.get("roll_number")));
                             branch1.setText((String) (response.get("branch")));
                             mobile1.setText((String) (response.get("mobile")));
-                            reffaralDone.setText((String) (response.get("name")));
+                            reffaralDone.setText((String) (response.get("referral")));
                             Picasso.with(ProfileMain.this).load((String) response.get("image_url")).resize(80, 80).centerCrop().into(profilemain);
 
                         } catch (JSONException e) {
@@ -283,8 +282,8 @@ public class ProfileMain extends AppCompatActivity {
             if (data != null) {
                 Uri photoUri = data.getData();
                 try {
-                    selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                     loadPic.setVisibility(View.VISIBLE);
+                    selectedImage = MediaStore.Images.Media.getBitmap(this.getContentResolver(), photoUri);
                     isHuman(selectedImage);
 
 
@@ -294,14 +293,15 @@ public class ProfileMain extends AppCompatActivity {
                 }
             }
         } else if (requestCode == CAMERA) {
-            selectedImage = (Bitmap) data.getExtras().get("data");
             loadPic.setVisibility(View.VISIBLE);
+            selectedImage = (Bitmap) data.getExtras().get("data");
             isHuman(selectedImage);
         }
 
         SharedPreferences sharedPreferences=getSharedPreferences("number",MODE_PRIVATE);
         sumbit.setVisibility(View.VISIBLE);
         name1.setEnabled(true);
+        mobile1.setEnabled(true);
         name1.setText(sharedPreferences.getString("name","Name"));
         rollNumber1.setEnabled(true);
         rollNumber1.setText(sharedPreferences.getString("rollNo","Roll Number"));
@@ -333,18 +333,12 @@ public class ProfileMain extends AppCompatActivity {
                                         int counter = 0;
                                         for (FirebaseVisionFace face : faces) {
 
-//                                            FirebaseVisionFaceLandmark leftEar = face.getLandmark(FirebaseVisionFaceLandmark.LEFT_EYE);
-//                                            Log.d("Face Contours",String.valueOf(leftEar));
-//                                            Toast.makeText(MainActivity.this, "ABCD", Toast.LENGTH_SHORT).show();
                                             List<FirebaseVisionPoint> faceContours = face.getContour(FirebaseVisionFaceContour.ALL_POINTS).getPoints();
-                                            //Log.v("FaceContours",String.valueOf(faceContours));
                                             if (faceContours != null) {
                                                 ByteArrayOutputStream bs = new ByteArrayOutputStream();
                                                 selectedImage.compress(Bitmap.CompressFormat.JPEG, 50, bs);
                                                 byteArray = bs.toByteArray();
                                                 bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-
-
                                                 img = getResizedBitmap(bmp, 150);
                                                 pass = encodeTobase64(img);
                                                 profilemain.setImageBitmap(img);
@@ -403,16 +397,12 @@ public class ProfileMain extends AppCompatActivity {
         Branch = String.valueOf(branch1.getText());
         referal = String.valueOf(referral.getText());
         ContactNumber = mobile1.getText().toString();
-        Log.d("roll", RollNumber);
-        if (ContactNumber == null)
-            ContactNumber = "7587524626";
         if (Name.length() == 0) {
             Toast.makeText(ProfileMain.this, "Seems You Didn`t enter all the details", Toast.LENGTH_SHORT).show();
         } else {
             final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
             final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-            pass = "qqqq";
             if (pass == "") {
                 Toast.makeText(ProfileMain.this, "Please select profile picture", Toast.LENGTH_SHORT).show();
             } else if (Name == "" || RollNumber == "" || Branch == "" || ContactNumber == "" || pass == "") {
@@ -427,7 +417,7 @@ public class ProfileMain extends AppCompatActivity {
                 editor.putString("Image", pass);
                 //editor.putString("Gender", gender);
                 editor.commit();
-//                progress.setVisibility(View.VISIBLE);
+                progress.setVisibility(View.VISIBLE);
                 String requestId = MediaManager.get().upload(byteArray)
                         .unsigned("xf7gsy1r")
                         .callback(new UploadCallback() {
@@ -443,8 +433,9 @@ public class ProfileMain extends AppCompatActivity {
                             public void onSuccess(String requestId, Map resultData) {
                                 System.out.println(resultData.get("url"));
                                 img_Url = String.valueOf(resultData.get("url"));
-                                Toast.makeText(ProfileMain.this, img_Url + "ABCD", Toast.LENGTH_SHORT).show();
                                 post(ContactNumber);
+                                editor.putString("ImageURL",img_Url);
+                                editor.commit();
 //                                startActivity(new Intent(Profile.this, MainActivity.class));
 //                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 //                                editor.putString("ImageURL", String.valueOf(resultData.get("url")));
@@ -468,7 +459,7 @@ public class ProfileMain extends AppCompatActivity {
         }
     }
 
-    public void post(String ContactNumber) {
+    public void post(final String ContactNumber) {
         try {
             // byte[] data = referal.getBytes("UTF-8");
             base64a = referal;
@@ -481,11 +472,19 @@ public class ProfileMain extends AppCompatActivity {
         }
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/User/",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/User",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
                         Toast.makeText(ProfileMain.this, response, Toast.LENGTH_LONG).show();
+                        progress.setVisibility(View.GONE);
+                        sumbit.setVisibility(View.GONE);
+                        name1.setEnabled(false);
+                        rollNumber1.setEnabled(false);
+                        branch1.setEnabled(false);
+                        mobile1.setEnabled(false);
+                        buttonLoadImage = findViewById(R.id.profilePicture);
+                        buttonLoadImage.setFocusable(false);//////////////////////////////////////////
                     }
                 },
                 new Response.ErrorListener() {
@@ -501,25 +500,16 @@ public class ProfileMain extends AppCompatActivity {
 
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("firebase_id",id);
-                params.put("roll_number", "abcd");
-                params.put("branch", "csed");
-                params.put("mobile", "8888888888");
-                params.put("referral_friend", "1234");
-                params.put("name", "qq");
-                params.put("gender", "ww");
-                params.put("face_smash_status", "0");
+                params.put("roll_number",RollNumber);
+                params.put("branch", Branch);
+                params.put("mobile", ContactNumber);
+                params.put("name", Name);
                 params.put("image_url", img_Url);
                 return params;
             }
 
         };
         queue.add(stringRequest);
-        sumbit.setVisibility(View.GONE);
-        name1.setEnabled(false);
-        rollNumber1.setEnabled(false);
-        branch1.setEnabled(false);
-        buttonLoadImage = findViewById(R.id.profilePicture);
-        buttonLoadImage.setFocusable(false);
     }
 
     @Override

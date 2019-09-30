@@ -28,9 +28,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-/**
- * Coded by ThisIsNSH on 9/20/2018.
- */
+
 
 public class WallAdapter extends RecyclerView.Adapter<WallAdapter.MyViewHolder> {
 
