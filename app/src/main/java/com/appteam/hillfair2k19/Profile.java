@@ -317,13 +317,13 @@ public class Profile extends AppCompatActivity {
 
             @Override
             public void onClick(View arg0) {
-                setdata();
+                setData();
             }
 
         });
     }
 
-    public void setdata() {
+    public void setData() {
         Name = String.valueOf(studentName.getText());
         RollNumber = String.valueOf(rollNumber.getText());
         Branch = String.valueOf(branch.getText());
@@ -334,7 +334,6 @@ public class Profile extends AppCompatActivity {
             gender = "MALE";
         else if (female.isSelected())
             gender = "FEMALE";
-
         if (Name.length() == 0) {
             Toast.makeText(Profile.this, "Seems You Didn`t enter all the details", Toast.LENGTH_SHORT).show();
         } else {
@@ -343,7 +342,7 @@ public class Profile extends AppCompatActivity {
 
             if (pass == "") {
                 Toast.makeText(Profile.this, "Please select profile picture", Toast.LENGTH_SHORT).show();
-            } else if (Name == "" || RollNumber == "" || Branch == "" || ContactNumber == "" || pass == "" || gender == "") {
+            } else if (Name == "" || RollNumber == "" || Branch == "" || ContactNumber == "" || pass == "") {
                 Toast.makeText(Profile.this, "Please fill all fields", Toast.LENGTH_SHORT).show();
             } else if (RollNumber.equals("0")) {
                 Toast.makeText(Profile.this, "Please Enter Valid Roll No", Toast.LENGTH_SHORT).show();
@@ -353,8 +352,7 @@ public class Profile extends AppCompatActivity {
                 editor.putString("Branch", Branch);
                 editor.putString("Phone", ContactNumber);
                 editor.putString("Image", pass);
-                editor.putString("Gender", gender);
-                editor.putString("Referral", referal);
+                //editor.putString("Gender", gender);
                 editor.commit();
                 progress.setVisibility(View.VISIBLE);
                 String requestId = MediaManager.get().upload(byteArray)
@@ -375,6 +373,12 @@ public class Profile extends AppCompatActivity {
                                 editor.putString("ImageURL", String.valueOf(resultData.get("url")));
                                 editor.commit();
                                 post(ContactNumber);
+                                SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
+                                String id = sharedPreferences.getString("fireBaseId", null);
+                                Toast.makeText(Profile.this, id, Toast.LENGTH_LONG).show();
+                                progress.setVisibility(View.GONE);
+                                startActivity(new Intent(Profile.this, MainActivity.class));
+                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
                                 finish();
                             }
 
@@ -405,46 +409,46 @@ public class Profile extends AppCompatActivity {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-
         RequestQueue queue = Volley.newRequestQueue(this);
+
         StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/User",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
+                        Toast.makeText(Profile.this, response, Toast.LENGTH_LONG).show();
                         SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
                         SharedPreferences.Editor editor = sharedPreferences.edit();
                         editor.putString("ProfileCreated", "true");
                         editor.commit();
-                        progress.setVisibility(View.GONE);
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        Toast.makeText(Profile.this, error.toString(), Toast.LENGTH_LONG).show();
                     }
                 }) {
             @Override
             protected Map<String, String> getParams() {
-                SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
                 String id = sharedPreferences.getString("fireBaseId", null);
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("firebase_id", id);
                 params.put("roll_number", RollNumber);
                 params.put("branch", Branch);
                 params.put("mobile", ContactNumber);
-                params.put("referral_friend", referal);
                 params.put("name", Name);
+                params.put("referral_friend", referal);
                 params.put("gender", "MALE");
-                params.put("face_smash_status", "0");
+                params.put("face_smash_status", "1");
                 params.put("image_url", imgUrl);
                 return params;
             }
 
         };
         queue.add(stringRequest);
-
     }
+
 
     @Override
     public void onBackPressed() {

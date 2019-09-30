@@ -128,13 +128,21 @@ public class ProfileMain extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
         String id = sharedPreferences.getString("fireBaseId", null);
         getProfile(id);
-
+        String check2 = sharedPreferences.getString("Image", "https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png");
+        if (!check2.equals("https://www.fluigent.com/wp-content/uploads/2018/07/default-avatar-BW.png")) {
+            Bitmap img = setProfile(check2);
+            profilemain.setImageBitmap(img);
+        }
         findViewById(R.id.edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 changeProfile();
             }
         });
+    }
+    public Bitmap setProfile(String images) {
+        byte[] decodedByte = Base64.decode(images, 0);
+        return BitmapFactory.decodeByteArray(decodedByte, 0, decodedByte.length);
     }
 
     public Bitmap getResizedBitmap(Bitmap image, int maxSize) {
@@ -190,7 +198,7 @@ public class ProfileMain extends AppCompatActivity {
                             mobile1.setText((String) (response.get("mobile")));
                             reffaralDone.setText((String) (response.get("referral")));
                             Picasso.with(ProfileMain.this).load((String) response.get("image_url")).resize(80, 80).centerCrop().into(profilemain);
-
+                            //profilemain.setImageBitmap(sharedPreferences.getString("ImageUrl",null));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
