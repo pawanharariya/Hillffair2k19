@@ -48,8 +48,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        setContentView(R.layout.activity_login);
-        phone_button = findViewById(R.id.phone_login);
+        //setContentView(R.layout.activity_login);
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
@@ -60,19 +60,18 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             finish();
             startActivity(new Intent(this, MainActivity.class));
         } else if (Login.equals("Complete")&& Profile.equals("false")) {
-            finish();
+           finish();
             startActivity(new Intent(this, Profile.class));
         } else {
             setContentView(R.layout.activity_login);
+            phone_button = findViewById(R.id.phone_login);
+            phone_button.setOnClickListener(this);
         }
-
 //        Intent intent = new Intent(context, MainActivity.class);
 //        intent.putExtra("newBranch",newBranch);
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
-//
 //        finish();
-        phone_button.setOnClickListener(this);
     }
 
     @Override
@@ -86,9 +85,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                         new AuthUI.IdpConfig.PhoneBuilder().build()))
                                 .build(),
                         RC_SIGN_IN);
-
                 break;
-
         }
     }
 
@@ -102,10 +99,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Login", "Complete");
-                Toast.makeText(LoginActivity.this, "Authenticated.",
-                        Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Authenticated.",Toast.LENGTH_SHORT).show();
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
-
                 final String uid = mUser.getUid();
                 fireBaseId = uid;
                 editor.putString("fireBaseId", uid);
