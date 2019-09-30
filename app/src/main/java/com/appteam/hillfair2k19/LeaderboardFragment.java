@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -45,6 +46,8 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     private Activity activity;
     private IResult mResultCallback;
     private VolleyService mVolleyService;
+    private ToggleButton toggleButton;
+    Boolean ToggleButtonState;
 
     public LeaderboardFragment() {
     }
@@ -63,6 +66,14 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
                              Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
+
+        toggleButton=view.findViewById(R.id.toggleButton);
+        toggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getData();
+            }
+        });
 
         point = view.findViewById(R.id.point);
         referral = view.findViewById(R.id.referral);
@@ -84,6 +95,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     public void getData() {
 
         clubList.clear();
+        clubAdapter.notifyDataSetChanged();
         loadwall.setVisibility(View.VISIBLE);
 
         initVolleyCallback();
@@ -93,8 +105,12 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         final VolleyService mVolleyService = new VolleyService(mResultCallback, getContext());
 
+        ToggleButtonState= toggleButton.isChecked();
 
-        mVolleyService.getJsonObjectDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/leaderboard");
+        if (ToggleButtonState)
+            mVolleyService.getJsonObjectDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/leaderboard");
+        else
+            mVolleyService.getJsonObjectDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/quiz/leaderboard");
 
 
 
@@ -144,9 +160,20 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
                         for (int i=0;i<array.length();++i){
                             JSONObject object=array.getJSONObject(i);
                             String name=object.getString("Name");
-                            int candies=object.getInt("candies");
+                            ToggleButtonState= toggleButton.isChecked();
+                            int candies;
+                            int quiz_rating;
+
                             String gender=object.getString("Gender");
-                            Leaderboard leaderboard=new Leaderboard(name,candies,gender);
+                            Leaderboard leaderboard;
+                            if(ToggleButtonState){
+                                candies=object.getInt("candies");
+                                leaderboard=new Leaderboard(name,candies,gender);}
+                            else{
+                                quiz_rating=object.getInt("quiz_rating");
+                                leaderboard=new Leaderboard(name,quiz_rating,gender);
+                            }
+
                             clubList.add(leaderboard);
 
                         }
@@ -175,5 +202,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         };
 
     }
+
+
 
 }

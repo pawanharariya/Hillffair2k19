@@ -20,7 +20,7 @@ public class VolleyService {
     IResult mResultCallback = null;
     Context mContext;
 
-    VolleyService(IResult resultCallback, Context context) {
+   public VolleyService(IResult resultCallback, Context context) {
         mResultCallback = resultCallback;
         mContext = context;
     }

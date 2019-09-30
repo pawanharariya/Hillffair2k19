@@ -318,7 +318,7 @@ public class FaceSmash extends Fragment {
                     Log.e("zHell", jsonArray.toString());
 
 //                    //JsonArray
-                   // Toast.makeText(getContext(), String.valueOf(jsonArray), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), String.valueOf(jsonArray), Toast.LENGTH_SHORT).show();
 
 
                     for (int i = 0; i < jsonArray.length(); i++) {
@@ -327,7 +327,7 @@ public class FaceSmash extends Fragment {
                             obj = jsonArray.getJSONObject(i);
                             String url = obj.getString("url").replace("\\\\", "");
                             Log.e("URLs", url);
-                            if (url.contains("https"))
+                            if (url.contains("https")||url.contains("http"))
                             imageUrls.add(url);
 
                             String id = obj.getString("firebase_id");
@@ -365,6 +365,8 @@ public class FaceSmash extends Fragment {
 
 
     void handleNoIMages() {
+
+        Log.d("sizes",String.valueOf(imageUrls.size()));
         new AlertDialog.Builder(getContext())
                 .setTitle("No Entries")
                 .setMessage("Sorry No Entries Left!")
@@ -409,6 +411,8 @@ public class FaceSmash extends Fragment {
 
     private void changeImage() {
 
+        Log.d("size",String.valueOf(imageUrls.size()));
+
         int n = imageUrls.size() * imageUrls.size();
         boolean flag2 = false;
 
@@ -417,7 +421,7 @@ public class FaceSmash extends Fragment {
             int firstUrl = new Random().nextInt(imageUrls.size());
             int secondUrl = new Random().nextInt(imageUrls.size());
 
-            if (!hashMap.containsKey(imageUrls.get(firstUrl) + imageUrls.get(secondUrl)) && firstUrl != secondUrl) {
+            if (!hashMap.containsKey(imageUrls.get(firstUrl) + imageUrls.get(secondUrl)) && !(imageUrls.get(firstUrl).equals(imageUrls.get(secondUrl))) ){
 
                 Picasso.with(getContext()).load(imageUrls.get(firstUrl)).placeholder(R.drawable.progress_animation).into(firstPersonImage);
                 Picasso.with(getContext()).load(imageUrls.get(secondUrl)).placeholder(R.drawable.progress_animation).into(secondPersonImage);

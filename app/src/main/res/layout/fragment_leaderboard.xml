@@ -5,6 +5,18 @@
     android:background="@color/white"
     android:paddingTop="126dp">
 
+    <ToggleButton
+        android:id="@+id/toggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="0dp"
+        android:gravity="center"
+        android:onClick="toggle"
+        android:text="ToggleButton"
+        android:textOff="quiz"
+        android:textOn="facesmash" />
+
     <ProgressBar
         android:id="@+id/loadwall"
         android:layout_width="40dp"
@@ -96,4 +108,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
 </RelativeLayout>
