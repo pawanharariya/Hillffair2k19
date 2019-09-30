@@ -1,3 +1,4 @@
+
 package com.appteam.hillfair2k19;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +35,7 @@ import com.android.volley.VolleyError;
 import com.appteam.Wall.WallFragment;
 import com.appteam.fragments.ClubsFragment;
 import com.appteam.fragments.Coupons;
+import com.appteam.fragments.ScheduleFragment;
 import com.appteam.fragments.SponsersFragment;
 
 import com.appteam.hillfair2k19.ui.home.HomeFragment;
@@ -90,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        linkViews();
         nav = findViewById(R.id.nav);
         navAnim = findViewById(R.id.navAnim);
         navDrawer = findViewById(R.id.navDrawer);
@@ -431,7 +433,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                 l = findViewById(R.id.scheduleLayout);
                 //TODO: load schedulepage
-
+                ScheduleFragment scheduleFragment = new ScheduleFragment(this);
+                fragmentTransaction.replace(R.id.fragmentHolder, scheduleFragment);
+                fragmentTransaction.commit();
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
+                animateReverse(l, gamesTextView);
                 animate(gameLinearLayout, gamesTextView);
                 animate(homeLinearLayout, homeTextView);
                 animate(couponLinearLayout, couponTextView);
@@ -814,5 +820,3 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 }
-
-

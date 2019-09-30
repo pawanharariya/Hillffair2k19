@@ -18,20 +18,23 @@
         android:theme="@style/AppTheme" >
        <!-- <activity android:name="com.appteam.adapters.ClubAdapter"></activity>-->
         <activity android:name=".Quiz_QnA" />
-        <activity android:name=".ProfileMain"></activity>
-        <activity android:name=".Profile"></activity>
+        <activity android:name=".ProfileMain">
+        </activity>
+        <activity android:name=".Profile">
+
+        </activity>
         <activity android:name="Login"
             android:screenOrientation="portrait" />
 
         <activity android:name="LoginActivity"
             android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".MainActivity">
 
         </activity>
 

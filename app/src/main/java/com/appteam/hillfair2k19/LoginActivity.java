@@ -47,9 +47,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //setContentView(R.layout.activity_login);
-
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.KITKAT)
             getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS, WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
@@ -99,6 +96,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("Login", "Complete");
+
                 Toast.makeText(LoginActivity.this, "Authenticated.",Toast.LENGTH_SHORT).show();
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String uid = mUser.getUid();
@@ -117,11 +115,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                            if (task.isSuccessful()) {
 //                                String idToken = task.getResult().getToken();
 //
-////								Intent intent = new Intent(context, MainActivity.class);
-////								intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-////								startActivity(intent);
+////                                Intent intent = new Intent(context, MainActivity.class);
+////                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+////                                startActivity(intent);
 ////
-////								finish();
+////                                finish();
 //
 //                                // Send token to your backend via HTTPS
 //                                takeSignupOrSignin(response, uid, idToken,mUser.getPhoneNumber());
