@@ -1,48 +1,34 @@
 package com.appteam.hillfair2k19;
 
 
-import
-        android.content.Context;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.cloudinary.android.MediaManager;
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.ErrorCodes;
 import com.firebase.ui.auth.IdpResponse;
-import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button phone_button;
     private static final int RC_SIGN_IN = 200;
-    private Context context = this;
-    public int newBranch = 0;
     public static String fireBaseId;
+    public int newBranch = 0;
+    private Button phone_button;
+    private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,8 +42,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if (Login.equals("Complete") && Profile.equals("true")) {
             finish();
             startActivity(new Intent(this, MainActivity.class));
-        } else if (Login.equals("Complete")&& Profile.equals("false")) {
-           finish();
+        } else if (Login.equals("Complete") && Profile.equals("false")) {
+            finish();
             startActivity(new Intent(this, Profile.class));
         } else {
             setContentView(R.layout.activity_login);
@@ -96,7 +82,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
                 final SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                Toast.makeText(LoginActivity.this, "Authenticated.",Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Authenticated.", Toast.LENGTH_SHORT).show();
                 FirebaseUser mUser = FirebaseAuth.getInstance().getCurrentUser();
                 final String uid = mUser.getUid();
                 fireBaseId = uid;

@@ -19,7 +19,7 @@ import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class ContributorsAdaptor extends RecyclerView.Adapter<ContributorsAdaptor.MyViewHolder>  {
+public class ContributorsAdaptor extends RecyclerView.Adapter<ContributorsAdaptor.MyViewHolder> {
 
     private List<contributorsItem> contributorList;
     private Context context;

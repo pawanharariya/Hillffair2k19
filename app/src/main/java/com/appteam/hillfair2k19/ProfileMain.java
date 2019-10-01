@@ -1,10 +1,5 @@
 package com.appteam.hillfair2k19;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -17,16 +12,19 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,7 +34,6 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.cloudinary.android.MediaManager;
 import com.cloudinary.android.callback.ErrorInfo;
@@ -51,10 +48,8 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
-import com.google.protobuf.StringValue;
 import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -67,25 +62,27 @@ import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static com.androidnetworking.AndroidNetworking.post;
-import static com.appteam.hillfair2k19.MainActivity.fireBaseID;
-
 public class ProfileMain extends AppCompatActivity {
 
-    private ClipboardManager myClipboard;
-    private ClipData myClip;
-    TextView textView, save;
-    TextView name1, rollNumber1, referral, branch1, mobile1, reffaralDone;
-    CircleImageView profilemain, buttonLoadImage;
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 10;
+    TextView textView, save, name1, rollNumber1, referral, branch1, mobile1, reffaralDone;
+    CircleImageView profilemain, buttonLoadImage;
     Bitmap selectedImage, img, bmp;
     String base64a, pass;
     SharedPreferences prefs;
+    LinearLayout loadPic, progress;
+    RelativeLayout sumbit;
+    FirebaseVisionFaceDetectorOptions highAccuracyOpts =
+            new FirebaseVisionFaceDetectorOptions.Builder()
+                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+                    .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+                    .build();
+    private ClipboardManager myClipboard;
+    private ClipData myClip;
     private byte[] byteArray;
     private int PICK_PHOTO_CODE = 1046;
     private int GALLERY = 1, CAMERA = 2;
-    LinearLayout loadPic, progress;
-    RelativeLayout sumbit;
     private String Name, ContactNumber, Branch, RollNumber, referal, img_Url, base64b;
 
     public static String encodeTobase64(Bitmap image) {
@@ -107,7 +104,7 @@ public class ProfileMain extends AppCompatActivity {
         findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(ProfileMain.this,MainActivity.class);
+                Intent i = new Intent(ProfileMain.this, MainActivity.class);
                 startActivity(i);
                 overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
 
@@ -158,7 +155,7 @@ public class ProfileMain extends AppCompatActivity {
         rollNumber1.setEnabled(true);
         branch1.setEnabled(true);
         mobile1.setEnabled(true);
-        SharedPreferences sharedPreferences = getSharedPreferences("number",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("name", String.valueOf(name1.getText()));
         editor.putString("branch", String.valueOf(branch1.getText()));
@@ -227,13 +224,6 @@ public class ProfileMain extends AppCompatActivity {
         return true;
     }
 
-    FirebaseVisionFaceDetectorOptions highAccuracyOpts =
-            new FirebaseVisionFaceDetectorOptions.Builder()
-                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
-                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
-                    .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
-                    .build();
-
     private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);
         pictureDialog.setTitle("Select Action");
@@ -298,15 +288,15 @@ public class ProfileMain extends AppCompatActivity {
             isHuman(selectedImage);
         }
 
-        SharedPreferences sharedPreferences=getSharedPreferences("number",MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("number", MODE_PRIVATE);
         sumbit.setVisibility(View.VISIBLE);
         name1.setEnabled(true);
         mobile1.setEnabled(true);
-        name1.setText(sharedPreferences.getString("name","Name"));
+        name1.setText(sharedPreferences.getString("name", "Name"));
         rollNumber1.setEnabled(true);
-        rollNumber1.setText(sharedPreferences.getString("rollNo","Roll Number"));
+        rollNumber1.setText(sharedPreferences.getString("rollNo", "Roll Number"));
         branch1.setEnabled(true);
-        branch1.setText(sharedPreferences.getString("branch","Branch"));
+        branch1.setText(sharedPreferences.getString("branch", "Branch"));
         buttonLoadImage = findViewById(R.id.profilePicture);
         buttonLoadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -434,7 +424,7 @@ public class ProfileMain extends AppCompatActivity {
                                 System.out.println(resultData.get("url"));
                                 img_Url = String.valueOf(resultData.get("url"));
                                 post(ContactNumber);
-                                editor.putString("ImageURL",img_Url);
+                                editor.putString("ImageURL", img_Url);
                                 editor.commit();
 //                                startActivity(new Intent(Profile.this, MainActivity.class));
 //                                overridePendingTransition(R.anim.fade_in, R.anim.fade_out);
@@ -499,8 +489,8 @@ public class ProfileMain extends AppCompatActivity {
                 String id = sharedPreferences.getString("fireBaseId", null);
 
                 Map<String, String> params = new HashMap<String, String>();
-                params.put("firebase_id",id);
-                params.put("roll_number",RollNumber);
+                params.put("firebase_id", id);
+                params.put("roll_number", RollNumber);
                 params.put("branch", Branch);
                 params.put("mobile", ContactNumber);
                 params.put("name", Name);

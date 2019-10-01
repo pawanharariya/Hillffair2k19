@@ -12,6 +12,14 @@ public class Schedule {
     String time;
     String date;
 
+    public Schedule(String clubName, String eventName, String event_id, String time, String date) {
+        this.clubName = clubName;
+        this.eventName = eventName;
+        this.event_id = event_id;
+        this.time = time;
+        this.date = date;
+    }
+
     public String getClubName() {
         return clubName;
     }
@@ -51,15 +59,6 @@ public class Schedule {
     public void setDate(String date) {
         this.date = date;
     }
-
-    public Schedule(String clubName, String eventName, String event_id, String time, String date) {
-        this.clubName = clubName;
-        this.eventName = eventName;
-        this.event_id = event_id;
-        this.time = time;
-        this.date = date;
-    }
-
 
 
 }

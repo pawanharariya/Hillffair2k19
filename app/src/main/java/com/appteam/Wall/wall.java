@@ -12,15 +12,19 @@ public class wall {
     Integer liked;
 
 
-    public wall(String image_url, String likes , Integer liked,String post_id) {
+    public wall(String image_url, String likes, Integer liked, String post_id) {
         this.image_url = image_url;
         this.liked = liked;
         this.likes = likes;
-        this.post_id=post_id;
+        this.post_id = post_id;
     }
 
     public String getImage_url() {
         return image_url;
+    }
+
+    public void setImage_url(String image_url) {
+        this.image_url = image_url;
     }
 
     public String getPost_id() {
@@ -29,10 +33,6 @@ public class wall {
 
     public void setPost_id(String post_id) {
         this.post_id = post_id;
-    }
-
-    public void setImage_url(String image_url) {
-        this.image_url = image_url;
     }
 
     public String getLikes() {

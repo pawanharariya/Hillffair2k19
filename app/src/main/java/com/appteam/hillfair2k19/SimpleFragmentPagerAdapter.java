@@ -3,15 +3,13 @@ package com.appteam.hillfair2k19;
 
 import android.app.Activity;
 
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.appteam.Wall.WallFragment;
 import com.appteam.fragments.ClubsFragment;
-import com.appteam.fragments.Coupons;
 import com.appteam.fragments.SponsersFragment;
-
 
 
 public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
@@ -19,7 +17,7 @@ public class SimpleFragmentPagerAdapter extends FragmentPagerAdapter {
     Activity activity;
 
 
-    public SimpleFragmentPagerAdapter(FragmentManager fm,Activity activity) {
+    public SimpleFragmentPagerAdapter(FragmentManager fm, Activity activity) {
         super(fm);
 
         this.activity = activity;

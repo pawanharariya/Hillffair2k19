@@ -13,14 +13,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-
 public class VolleyService {
 
     IResult mResultCallback = null;
     Context mContext;
 
-   public VolleyService(IResult resultCallback, Context context) {
+    public VolleyService(IResult resultCallback, Context context) {
         mResultCallback = resultCallback;
         mContext = context;
     }

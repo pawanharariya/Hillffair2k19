@@ -8,26 +8,11 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.appteam.hillfair2k19.LoginActivity;
-import com.appteam.hillfair2k19.ProfileMain;
-import com.appteam.hillfair2k19.R;
-import com.cloudinary.android.MediaManager;
-import com.cloudinary.android.UploadRequest;
-import com.cloudinary.android.callback.ErrorInfo;
-import com.cloudinary.android.callback.UploadCallback;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -35,9 +20,19 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
+import com.appteam.hillfair2k19.R;
+import com.cloudinary.android.MediaManager;
+import com.cloudinary.android.callback.ErrorInfo;
+import com.cloudinary.android.callback.UploadCallback;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.json.JSONArray;
@@ -46,7 +41,6 @@ import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -55,26 +49,14 @@ import java.util.concurrent.TimeUnit;
 
 
 public class WallFragment extends Fragment implements View.OnClickListener {
-    private int GALLERY = 1, CAMERA = 2;
-    public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 10;
-    Bitmap selectedImage = null;
-    int openDialog = 1;
-    private byte[] byteArray;
-    private Bitmap bmp, img;
-    private int PICK_PHOTO_CODE = 1046;
 
-    public static ArrayList<String> imageArray = new ArrayList<>();
-    public static ArrayList<String> likesArray = new ArrayList<>();
-    public static ArrayList<Boolean> likedArray = new ArrayList<>();
-    String user_id;
-    String firebase_id;
+    Bitmap selectedImage = null;
+    int openDialog = 1, GALLERY = 1, CAMERA = 2;
     ProgressBar loadwall;
-    int set = 0;
-    private String base64b;
     String img_Url;
     SwipeRefreshLayout swiperefresh;
+    private byte[] byteArray;
     private WallAdapter wallAdapter;
-
     private FloatingActionButton fab;
     private RecyclerView fifthRec;
     private List<wall> wallList = new ArrayList<>();
@@ -95,9 +77,9 @@ public class WallFragment extends Fragment implements View.OnClickListener {
         SharedPreferences sharedPreferences = this.getActivity().getSharedPreferences("number", Context.MODE_PRIVATE);
         id = sharedPreferences.getString("fireBaseId", null);
     }
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         AndroidNetworking.initialize(getActivity().getApplicationContext());
         View view = inflater.inflate(com.appteam.hillfair2k19.R.layout.fragment_wall, container, false);
@@ -131,15 +113,11 @@ public class WallFragment extends Fragment implements View.OnClickListener {
         Log.e("WallFragment", "onCreateView: ");
         return view;
     }
-//    void getData(){
-//        wallList.add(new wall("http://13.235.43.83:8000/uploads/1569240326536.jpg","1",0));
-//    }
-
 
     void getData() {
         loadwall.setVisibility(View.VISIBLE);
         wallList.clear();
-        AndroidNetworking.get(getActivity().getString(R.string.baseUrl) + "/feed/1/" + id )
+        AndroidNetworking.get(getActivity().getString(R.string.baseUrl) + "/feed/1/" + id)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
 
@@ -148,16 +126,16 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                         try {
 
                             System.out.println(response);
-                            Log.e("response",response.toString());
-                            JSONArray feed=response.getJSONArray("feed");
-                            int users=feed.length();
+                            Log.e("response", response.toString());
+                            JSONArray feed = response.getJSONArray("feed");
+                            int users = feed.length();
                             for (int i = 0; i < users; i++) {
                                 JSONObject json = feed.getJSONObject(i);
                                 String likes = json.getString("likes");
                                 String imgUrl = json.getString("image_url");
                                 int liked = json.getInt("liked");
-                                String postid=json.getString("post_id");
-                                wallList.add(new wall(imgUrl, likes , liked,postid));
+                                String postid = json.getString("post_id");
+                                wallList.add(new wall(imgUrl, likes, liked, postid));
                                 loadwall.setVisibility(View.GONE);
                             }
                             wallAdapter.notifyDataSetChanged();
@@ -185,6 +163,7 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                 break;
         }
     }
+
     public void choosePhotoFromGallery() {
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
@@ -192,6 +171,7 @@ public class WallFragment extends Fragment implements View.OnClickListener {
             startActivityForResult(galleryIntent, GALLERY);
         }
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -247,7 +227,8 @@ public class WallFragment extends Fragment implements View.OnClickListener {
             }
         }
     }
-    public void post(){
+
+    public void post() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, getString(R.string.baseUrl) + "/feed",
@@ -263,12 +244,12 @@ public class WallFragment extends Fragment implements View.OnClickListener {
                     public void onErrorResponse(VolleyError error) {
                         Toast.makeText(activity, String.valueOf(error), Toast.LENGTH_SHORT).show();
                     }
-                }){
+                }) {
             @Override
-            protected Map<String,String> getParams(){
-                Map<String,String> params = new HashMap<String, String>();
-                params.put("firebase_id",id);
-                params.put("image_url",img_Url);
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("firebase_id", id);
+                params.put("image_url", img_Url);
                 return params;
             }
         };

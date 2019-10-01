@@ -1,11 +1,11 @@
 package com.appteam.Wall;
 
 
-import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.util.Log;
+import android.graphics.Color;
+import android.graphics.ColorFilter;
+import android.graphics.PorterDuff;
+import android.graphics.PorterDuffColorFilter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,19 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.airbnb.lottie.LottieProperty;
+import com.airbnb.lottie.model.KeyPath;
+import com.airbnb.lottie.value.LottieFrameInfo;
+import com.airbnb.lottie.value.SimpleLottieValueCallback;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
-import com.appteam.hillfair2k19.R;
 import com.squareup.picasso.Picasso;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
-
 
 
 public class WallAdapter extends RecyclerView.Adapter<WallAdapter.MyViewHolder> {
@@ -35,7 +32,7 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.MyViewHolder> 
     String roll;
     List<wall> wallList;
     Activity activity;
-   wall wall;
+    wall wall;
     boolean isliked;
     int likes;
     String image_id, user_id;
@@ -57,10 +54,27 @@ public class WallAdapter extends RecyclerView.Adapter<WallAdapter.MyViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, final int position) {
         wall = wallList.get(position);
+
+        holder.like.addValueCallback(
+                new KeyPath("**"),
+                LottieProperty.COLOR_FILTER,
+                new SimpleLottieValueCallback<ColorFilter>() {
+                    @Override
+                    public ColorFilter getValue(LottieFrameInfo<ColorFilter> frameInfo) {
+                        return new PorterDuffColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+                    }
+                }
+        );
+
+        // todo heart ka color abhi white hai tap hone par orange karo, white karne ka code upar hai usme orange color use karo jo har jagah used hai
+
+
 //        SharedPreferences prefs = activity.getSharedPreferences("number", Context.MODE_PRIVATE);
 //        roll = prefs.getString("roll number", "gsb");
+
         if (wallList.get(position).getImage_url() != null)
-        Picasso.with(activity).load(wallList.get(position).getImage_url()).into(holder.image);
+            Picasso.with(activity).load(wallList.get(position).getImage_url()).into(holder.image);
+
 //        holder.like_count.setText(likesArray.get(position) + " Likes");
 //        getlike2(holder);
 

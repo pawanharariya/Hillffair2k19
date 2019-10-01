@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -15,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
 import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.appteam.adapters.TeamAdapter;
 import com.appteam.hillfair2k19.R;
@@ -76,7 +74,7 @@ public class SponsersFragment extends Fragment {
                         // do anything with response
                         try {
                             JSONArray response = resp.getJSONArray("sponsors");
-                         //   Toast.makeText(activity, String.valueOf(response), Toast.LENGTH_SHORT).show();
+                            //   Toast.makeText(activity, String.valueOf(response), Toast.LENGTH_SHORT).show();
                             loadwall.setVisibility(View.GONE);
                             for (int i = 0; i < response.length(); i++) {
                                 JSONObject json = response.getJSONObject(i);

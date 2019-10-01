@@ -10,8 +10,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scaleType="centerCrop"
-        android:src="@drawable/background" />
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,10 +22,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="96dp"
+            android:layout_marginRight="16dp"
             android:adjustViewBounds="true"
-            android:src="@drawable/hillffair2"
             android:visibility="gone" />
 
         <LinearLayout
@@ -56,20 +54,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/login"
-                android:layout_marginBottom="8dp"
                 android:layout_marginLeft="48dp"
-                android:layout_marginRight="48dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginRight="48dp"
+                android:layout_marginBottom="8dp"
                 android:background="@drawable/green_corner"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/ps"
                 android:gravity="center"
                 android:hint="Enter Number"
                 android:inputType="number"
-                android:paddingBottom="8dp"
                 android:paddingLeft="32dp"
-                android:paddingRight="32dp"
                 android:paddingTop="8dp"
+                android:paddingRight="32dp"
+                android:paddingBottom="8dp"
                 android:textColor="@color/black"
                 android:textColorHint="#bbb"
                 android:textSize="18sp"
@@ -81,18 +79,18 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/et_phone_number"
                 android:layout_marginLeft="48dp"
-                android:layout_marginRight="48dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginRight="48dp"
                 android:background="@drawable/green_corner"
                 android:backgroundTint="@color/white"
                 android:fontFamily="@font/ps"
                 android:gravity="center"
                 android:hint="Enter Otp"
                 android:inputType="number"
-                android:paddingBottom="8dp"
                 android:paddingLeft="32dp"
-                android:paddingRight="32dp"
                 android:paddingTop="8dp"
+                android:paddingRight="32dp"
+                android:paddingBottom="8dp"
                 android:textColor="@color/black"
                 android:textColorHint="#bbb"
                 android:textSize="18sp"
@@ -102,8 +100,8 @@
                 android:id="@+id/card"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="48dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="48dp"
                 app:cardBackgroundColor="@color/white"
                 app:cardCornerRadius="14dp"
                 app:cardElevation="0dp"
@@ -144,6 +142,7 @@
 
 
     </LinearLayout>
+
     <TextView
         android:id="@+id/skip"
         android:layout_width="wrap_content"
@@ -157,13 +156,13 @@
         android:text="Skip"
         android:textAllCaps="true"
         android:textColor="@color/black"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/phone_login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="40dp" />
-<!--        android:background="?attr/selectableItemBackgroundBorderless"-->
+    <!--        android:background="?attr/selectableItemBackgroundBorderless"-->
 
 </RelativeLayout>

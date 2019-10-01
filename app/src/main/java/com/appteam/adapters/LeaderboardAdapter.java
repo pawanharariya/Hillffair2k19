@@ -2,7 +2,6 @@ package com.appteam.adapters;
 
 
 import android.app.Activity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -12,14 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appteam.hillfair2k19.R;
 import com.appteam.model.Leaderboard;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-
 /**
-.
+ * .
  */
 
 public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.MyViewHolder> {
@@ -42,7 +38,7 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
         final Leaderboard club = leaderboardList.get(position);
         holder.name.setText(club.getName());
-       holder.candies.setText(String.valueOf(club.getCandies()));
+        holder.candies.setText(String.valueOf(club.getCandies()));
         holder.gender.setText(club.getGender());
         holder.rank.setText(String.valueOf(position + 1));
     }

@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -17,7 +15,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -49,7 +46,6 @@ import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceContour;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetector;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceDetectorOptions;
-import com.google.protobuf.StringValue;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -62,7 +58,6 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class Profile extends AppCompatActivity {
-    private int GALLERY = 1, CAMERA = 2;
     public final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 10;
     Bitmap selectedImage = null;
     int openDialog = 1;
@@ -70,6 +65,13 @@ public class Profile extends AppCompatActivity {
     SharedPreferences.Editor editor;
     LinearLayout progress, loadPic;
     String pass = "";
+    FirebaseVisionFaceDetectorOptions highAccuracyOpts =
+            new FirebaseVisionFaceDetectorOptions.Builder()
+                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
+                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
+                    .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
+                    .build();
+    private int GALLERY = 1, CAMERA = 2;
     private byte[] byteArray;
     private EditText studentName, rollNumber, branch, contactNumber, referral;
     private String Name, base64a, base64b, RollNumber, Branch, referal, ContactNumber, imgUrl, gender;
@@ -139,13 +141,6 @@ public class Profile extends AppCompatActivity {
         }
         return true;
     }
-
-    FirebaseVisionFaceDetectorOptions highAccuracyOpts =
-            new FirebaseVisionFaceDetectorOptions.Builder()
-                    .setPerformanceMode(FirebaseVisionFaceDetectorOptions.FAST)
-                    .setLandmarkMode(FirebaseVisionFaceDetectorOptions.ALL_LANDMARKS)
-                    .setContourMode(FirebaseVisionFaceDetectorOptions.ALL_CONTOURS)
-                    .build();
 
     private void showPictureDialog() {
         AlertDialog.Builder pictureDialog = new AlertDialog.Builder(this);

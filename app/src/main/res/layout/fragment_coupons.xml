@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/fragment"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#1B1C20"
+    android:paddingTop="56dp">
 
-    <!-- TODO: Update blank fragment layout -->
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/top"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:orientation="horizontal">
+        android:layout_height="48dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:fontFamily="@font/ps"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="30dp"
-            android:paddingBottom="8dp"
-            android:text="Redeem Your Candies here"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="24dp"
+            android:fontFamily="@font/psb"
+            android:text="Redeem"
+            android:textColor="@color/white"
+            android:textSize="35sp" />
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_width="30dp"
+            android:layout_height="29dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8dp"
+            android:layout_toLeftOf="@id/candies"
+            android:scaleType="fitXY"
             app:srcCompat="@drawable/ic_candies" />
 
         <TextView
             android:id="@+id/candies"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
+            android:layout_marginRight="24dp"
             android:fontFamily="@font/ps"
-            android:hint="0"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
-            android:paddingRight="16dp"
-            android:paddingBottom="8dp"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-    </LinearLayout>
+            android:text="0"
+            android:textColor="@color/white"
+            android:textSize="25sp" />
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -53,167 +51,91 @@
         android:layout_below="@id/top"
         android:scrollbars="none">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="64dp"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/coupon1"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:rotation="45"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_coupon" />
 
-                    <ImageView
-                        android:id="@+id/coupon1"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/ic_coupon" />
-
-                    <ImageView
-                        android:id="@+id/coupon2"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/ic_coupon" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/coupon2"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
-
-                    <ImageView
-                        android:id="@+id/coupon3"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/ic_coupon" />
-
-                    <ImageView
-                        android:id="@+id/coupon4"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/ic_coupon" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp">
-
-                    <ImageView
-                        android:id="@+id/coupon5"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/ic_coupon" />
-
-                    <ImageView
-                        android:id="@+id/coupon6"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:padding="10dp"
-                        android:rotation="45"
-                        app:srcCompat="@drawable/ic_coupon" />
-                </LinearLayout>
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:rotation="45"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_coupon" />
             </LinearLayout>
 
-            <FrameLayout
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="16dp">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-60dp">
 
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <ImageView
+                    android:id="@+id/coupon3"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_margin="16dp"
-                    android:orientation="vertical">
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:rotation="45"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_coupon" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                <ImageView
+                    android:id="@+id/coupon4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:rotation="45"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_coupon" />
+            </LinearLayout>
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Helllo" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="-60dp">
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="200dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Helllo" />
-                    </LinearLayout>
+                <ImageView
+                    android:id="@+id/coupon5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:rotation="45"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_coupon" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
+                <ImageView
+                    android:id="@+id/coupon6"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:adjustViewBounds="true"
+                    android:rotation="45"
+                    android:tint="@color/colorPrimaryDark"
+                    app:srcCompat="@drawable/ic_coupon" />
+            </LinearLayout>
+        </LinearLayout>
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="220dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Helllo" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="220dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Helllo" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="10dp">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="220dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Helllo" />
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="220dp"
-                            android:layout_weight="1"
-                            android:gravity="center"
-                            android:padding="10dp"
-                            android:text="Helllo" />
-                    </LinearLayout>
-                </LinearLayout>
-            </FrameLayout>
-        </RelativeLayout>
     </ScrollView>
 </RelativeLayout>

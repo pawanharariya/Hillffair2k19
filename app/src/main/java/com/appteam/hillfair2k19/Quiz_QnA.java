@@ -1,9 +1,5 @@
 package com.appteam.hillfair2k19;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,18 +11,15 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.appteam.model.QuestionData;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,56 +31,51 @@ import java.util.List;
 import java.util.Map;
 
 public class Quiz_QnA extends AppCompatActivity {
-    Button button_1,button_2,button_3,button_4;
-    TextView questionview,timeview;
-    int Score;
-    int counter=0;
-    Intent intent;
 
-    CountDownTimer countDownTimer;
-
-    RequestQueue requestQueue;
-
-    List<QuestionData> questions = new ArrayList<>();
     private static final String urlofApp = "http://api.hillffair.com/quiz/questions";
-    private static final String urlofScore="http://api.hillffair.com/quiz/answers";
+    private static final String urlofScore = "http://api.hillffair.com/quiz/answers";
+
+    TextView button_1, button_2, button_3, button_4;
+    TextView questionview, timeview;
+    int Score, counter = 0;
+    Intent intent;
+    CountDownTimer countDownTimer;
+    RequestQueue requestQueue;
+    List<QuestionData> questions = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz__qn);
-        button_1=findViewById(R.id.button);
-        button_2=findViewById(R.id.button2);
-        button_3=findViewById(R.id.button3);
-        button_4=findViewById(R.id.button4);
-        questionview=findViewById(R.id.textView6);
-        timeview=findViewById(R.id.textView7);
+
+        button_1 = findViewById(R.id.button);
+        button_2 = findViewById(R.id.button2);
+        button_3 = findViewById(R.id.button3);
+        button_4 = findViewById(R.id.button4);
+        questionview = findViewById(R.id.textView6);
+        timeview = findViewById(R.id.textView7);
 
         requestQueue = Volley.newRequestQueue(this);
-
-
-        countDownTimer=new CountDownTimer(15000,1000) {
+        countDownTimer = new CountDownTimer(15000, 1000) {
             @Override
             public void onTick(long l) {
-                timeview.setText(String.valueOf(l/1000));
+                timeview.setText(String.valueOf(l / 1000));
             }
 
             @Override
             public void onFinish() {
-                counter ++;
-                if(counter<questions.size()) {
+                counter++;
+                if (counter < questions.size()) {
                     UpdateQuestion();
-                }
-                else {
+                } else {
                     Score();
                 }
 
 
-
             }
         };
-        intent=getIntent();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,urlofApp, new Response.Listener<String>() {
+        intent = getIntent();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlofApp, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 //                Toast.makeText(Quiz_QnA.this, response, Toast.LENGTH_SHORT).show();
@@ -108,10 +96,10 @@ public class Quiz_QnA extends AppCompatActivity {
 
                         } catch (JSONException e) {
                             e.printStackTrace();
-                            Log.e("Error",e.getMessage());
+                            Log.e("Error", e.getMessage());
                         }
                     }
-                UpdateQuestion();
+                    UpdateQuestion();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -120,22 +108,19 @@ public class Quiz_QnA extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Loggerreer",error.getMessage());
+                Log.e("Loggerreer", error.getMessage());
 
             }
-        }){
+        }) {
             @Override
-            protected Map<String,String> getParams()  {
-                Map<String,String> params = new HashMap<>();
-                params.put("category",String.valueOf(intent.getIntExtra("Category",1)));
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("category", String.valueOf(intent.getIntExtra("Category", 1)));
                 return params;
             }
         };
 
         requestQueue.add(stringRequest);
-
-
-
 
 
         button_1.setOnClickListener(new View.OnClickListener() {
@@ -171,17 +156,10 @@ public class Quiz_QnA extends AppCompatActivity {
         });
 
 
-
-
-
-
-
-
-
     }
 
 
-    private void UpdateQuestion(){
+    private void UpdateQuestion() {
         Toast.makeText(this, String.valueOf(counter), Toast.LENGTH_SHORT).show();
         if (counter >= 10)
             Score();
@@ -193,33 +171,18 @@ public class Quiz_QnA extends AppCompatActivity {
         countDownTimer.start();
 
 
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     private void Score() {
 
         final SharedPreferences sharedPreferences = getSharedPreferences("number", Context.MODE_PRIVATE);
-        final String firebase_id = sharedPreferences.getString("uid","null");
-        Log.v("firebase_id",firebase_id);
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,urlofScore, new Response.Listener<String>() {
+        final String firebase_id = sharedPreferences.getString("uid", "null");
+        Log.v("firebase_id", firebase_id);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, urlofScore, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.e("Loggerreer",response);
+                Log.e("Loggerreer", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     Score = jsonObject.getInt("score");
@@ -237,21 +200,21 @@ public class Quiz_QnA extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("Loggerreer",error.getMessage());
+                Log.e("Loggerreer", error.getMessage());
 
             }
-        }){
+        }) {
             @Override
-            protected Map<String,String> getParams()  {
-                Map<String,String> params = new HashMap<>();
-                Map<String,String> answer = new HashMap<>();
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                Map<String, String> answer = new HashMap<>();
 
-                for(int i=0; i<questions.size();i++){
-                answer.put("'id' : '"+questions.get(i).getQuestionid()+"'","'ans' : '"+questions.get(i).getOption_chosen()+"'");
+                for (int i = 0; i < questions.size(); i++) {
+                    answer.put("'id' : '" + questions.get(i).getQuestionid() + "'", "'ans' : '" + questions.get(i).getOption_chosen() + "'");
                 }
-                params.put("firebase_id",firebase_id);
-                params.put("answers",answer.toString());
-                Log.e("SentRequest",params.toString());
+                params.put("firebase_id", firebase_id);
+                params.put("answers", answer.toString());
+                Log.e("SentRequest", params.toString());
                 return params;
             }
         };
@@ -299,12 +262,6 @@ public class Quiz_QnA extends AppCompatActivity {
 
     }
 */
-
-
-
-
-
-
 
 
 }

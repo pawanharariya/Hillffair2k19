@@ -9,11 +9,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.appteam.hillfair2k19.R;
+import com.appteam.hillfair2k19.model.Team;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-import com.appteam.hillfair2k19.model.Team;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 /**

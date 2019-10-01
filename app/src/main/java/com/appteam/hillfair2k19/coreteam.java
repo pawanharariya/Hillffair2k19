@@ -1,19 +1,16 @@
 package com.appteam.hillfair2k19;
 
 
-import
-        android.app.Activity;
+import android.app.Activity;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.appteam.adapters.TeamAdapter;
@@ -24,7 +21,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import com.appteam.hillfair2k19.model.Team;
 
 
 /**
@@ -33,11 +29,12 @@ import com.appteam.hillfair2k19.model.Team;
 public class coreteam extends Fragment {
 
     ProgressBar loadwall;
+    IResult mResultCallbackAndroidNeworking;
     private RecyclerView recyclerView;
     private TeamAdapter teamAdapter;
     private List<com.appteam.hillfair2k19.model.Team> teamList = new ArrayList<>();
     private Activity activity;
-    IResult mResultCallbackAndroidNeworking;
+
     public coreteam() {
     }
 
@@ -77,24 +74,23 @@ public class coreteam extends Fragment {
         //Initialising
         initAndroidNetworkingCallback();
         com.androidnetworking.AndroidNetworking.initialize(getActivity());
-        com.appteam.hillfair2k19.AndroidNetworking androidNetworking = new com.appteam.hillfair2k19.AndroidNetworking(mResultCallbackAndroidNeworking,getActivity());
+        com.appteam.hillfair2k19.AndroidNetworking androidNetworking = new com.appteam.hillfair2k19.AndroidNetworking(mResultCallbackAndroidNeworking, getActivity());
 
         //                 GET REQUEST SINGLE JSON OBJECT
-        androidNetworking.getJsonObjectAndroidNetworking("GetCoreteam",getString(R.string.baseUrl) + "/core_team");
+        androidNetworking.getJsonObjectAndroidNetworking("GetCoreteam", getString(R.string.baseUrl) + "/core_team");
 
 
 //        GET REQUEST FOR JSON ARRAY
 //        androidNetworking.getJsonArrayAndroidNetworking("GETJSONARRAYFROMLIIFESAVER","https://lifesaverapp.herokuapp.com/controlpolice");
 
 
-
     }
-    void initAndroidNetworkingCallback(){
+
+    void initAndroidNetworkingCallback() {
         mResultCallbackAndroidNeworking = new IResult() {
             @Override
-            public void notifySuccess(String requestType, JSONObject response , JSONArray jsonArray) {
-                if (response != null)
-                {
+            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
+                if (response != null) {
                     //JsonObject
                     try {
                         jsonArray = response.getJSONArray("members");
@@ -112,8 +108,7 @@ public class coreteam extends Fragment {
                         e.printStackTrace();
                     }
 //                    Toast.makeText(getActivity(), String.valueOf(jsonArray), Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     //JsonArray
                 }
             }

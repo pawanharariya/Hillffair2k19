@@ -31,7 +31,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.MyViewHolder> 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.adapter_sponsor, null);
+        View view = View.inflate(parent.getContext(), R.layout.activity_club_adapter, null);
         return new MyViewHolder(view);
     }
 

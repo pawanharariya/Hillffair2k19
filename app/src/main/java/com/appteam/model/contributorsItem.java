@@ -1,7 +1,5 @@
 package com.appteam.hillfair2k19.model;
 
-import java.util.Collection;
-
 public class contributorsItem {
     String name, image, githubUrl;
 

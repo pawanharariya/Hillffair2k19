@@ -1,19 +1,14 @@
 package com.appteam.hillfair2k19;
 
-import
-        androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
+import android.os.Bundle;
+import android.view.View;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-import android.view.View;
-
 import com.appteam.adapters.ContributorsAdaptor;
-import com.appteam.hillfair2k19.FaceSmash;
-import com.appteam.hillfair2k19.R;
 import com.appteam.hillfair2k19.model.contributorsItem;
 
 import java.util.ArrayList;
@@ -49,7 +44,7 @@ public class ContributorsActivity extends AppCompatActivity {
 
     private void initData() {
         //5th Year
-       // contributorsItems.add(new contributorsItem("Sahil Ramola", BASE_URL + "RamolaWeb.png", BASE_URL + "RamolaWeb"));
+        // contributorsItems.add(new contributorsItem("Sahil Ramola", BASE_URL + "RamolaWeb.png", BASE_URL + "RamolaWeb"));
 
 
         //contributorsItems.add(new contributorsItem("Sukhbir Singh", BASE_URL + "sukhbir-singh.png", BASE_URL + "sukhbir-singh"));

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff"
+    android:background="#1B1C20"
     tools:context=".MainActivity">
 
     <androidx.viewpager.widget.ViewPager
@@ -12,221 +12,224 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="50dp"/>
+        android:layout_marginBottom="50dp" />
 
     <FrameLayout
         android:id="@+id/fragmentHolder"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-    </FrameLayout>
+        android:layout_height="match_parent"
+        android:paddingBottom="48dp" />
 
-
-    <LinearLayout
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:background="@color/grey"
-        android:orientation="horizontal">
+        app:cardBackgroundColor="#101010"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="0dp"
+        app:cardUseCompatPadding="true">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:paddingRight="8dp"
+            android:paddingLeft="8dp"
+            android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/core"
-                android:layout_width="wrap_content"
-
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:elevation="50dp" />
+                android:orientation="horizontal"
+                android:visibility="gone">
 
-            <Button
-                android:id="@+id/sponsors"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:elevation="50dp" />
+                <Button
+                    android:id="@+id/core"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:elevation="50dp" />
 
-            <Button
-                android:id="@+id/club"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:elevation="50dp" />
+                <Button
+                    android:id="@+id/sponsors"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:elevation="50dp" />
 
-            <Button
-                android:id="@+id/reward"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="4dp"
-                android:elevation="50dp" />
-        </LinearLayout>
+                <Button
+                    android:id="@+id/club"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:elevation="50dp" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+                <Button
+                    android:id="@+id/reward"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:elevation="50dp" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/homeLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/round_corners"
-                android:backgroundTint="@color/colorPrimaryLight"
+                android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/gamesLayout"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="8dp">
 
                 <ImageButton
                     android:id="@+id/homeButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
                     android:background="@null"
                     android:onClick="handleClick"
-                    app:srcCompat="@drawable/ic_home_black_24dp" />
+                    android:maxHeight="24dp"
+                    android:scaleType="fitCenter"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/home" />
 
                 <TextView
                     android:id="@+id/homeTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
+                    android:paddingTop="4dp"
                     android:fontFamily="@font/psb"
+                    android:gravity="center_vertical"
+                    android:maxLines="1"
                     android:onClick="handleClick"
-                    android:text="Home" />
+                    android:text="Home"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/gamesLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/round_corners"
+                android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/scheduleLayout"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/homeLayout"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="8dp">
 
                 <ImageButton
                     android:id="@+id/gamesButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="24dp"
                     android:background="@null"
                     android:onClick="handleClick"
-                    app:srcCompat="@drawable/ic_games_black_24dp" />
+                    android:scaleType="fitCenter"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/game" />
 
                 <TextView
                     android:id="@+id/gameTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/psb"
+                    android:maxLines="1"
                     android:onClick="handleClick"
-                    android:text="Games" />
+                    android:text="Play"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/scheduleLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/round_corners"
+                android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/couponsLayout"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/gamesLayout"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="8dp">
 
                 <ImageButton
                     android:id="@+id/scheduleButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="24dp"
                     android:background="@null"
                     android:onClick="handleClick"
-                    app:srcCompat="@drawable/ic_schedule_black_24dp" />
+                    android:scaleType="fitCenter"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/schedule" />
 
                 <TextView
                     android:id="@+id/scheduleTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/psb"
+                    android:maxLines="1"
                     android:onClick="handleClick"
-                    android:text="Schedule" />
+                    android:text="Schedule"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/couponsLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_margin="8dp"
+                android:layout_weight="1"
                 android:background="@drawable/round_corners"
+                android:gravity="center"
                 android:orientation="horizontal"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/scheduleLayout"
-                app:layout_constraintTop_toTopOf="parent">
+                android:padding="8dp">
 
                 <ImageButton
                     android:id="@+id/couponButton"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_height="match_parent"
+                    android:adjustViewBounds="true"
+                    android:maxHeight="24dp"
                     android:background="@null"
                     android:onClick="handleClick"
-                    app:srcCompat="@drawable/ic_account_balance_wallet_black_24dp" />
+                    android:scaleType="fitCenter"
+                    android:tint="@color/white"
+                    app:srcCompat="@drawable/coupon" />
 
                 <TextView
                     android:id="@+id/couponTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="8dp"
                     android:fontFamily="@font/psb"
+                    android:maxLines="1"
                     android:onClick="handleClick"
-                    android:text="Coupons" />
+                    android:text="Coupons"
+                    android:textColor="@color/white"
+                    android:textSize="13sp" />
             </LinearLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
 
-    </LinearLayout>
+    </androidx.cardview.widget.CardView>
 
-
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <RelativeLayout
         android:id="@+id/navDrawer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d0ffffff"
+        android:background="#d01B1C20"
         android:elevation="3dp"
         android:visibility="gone"
         tools:context=".activity.DashActivity">
@@ -234,7 +237,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="200dp"
-            android:background="@color/white" />
+            android:background="#1B1C20" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -254,7 +257,7 @@
             android:elevation="4dp"
             android:fontFamily="@font/psb"
             android:text="Contributors"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:textSize="16sp"
             android:visibility="visible" />
 
@@ -273,7 +276,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Profile"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -285,7 +288,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="About Hill'ffair"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -297,7 +300,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="About Us"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -310,7 +313,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Settings"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -323,7 +326,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Notification"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -335,7 +338,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Campus Map"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -348,7 +351,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Emergency Contact"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -360,7 +363,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Logout"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -372,7 +375,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Facesmash"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -384,7 +387,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Leaderboard"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -396,7 +399,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Core Team"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
 
@@ -408,10 +411,9 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:fontFamily="@font/psb"
                 android:text="Clubs"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:textSize="20sp"
                 android:visibility="gone" />
-
 
 
         </LinearLayout>
@@ -425,7 +427,6 @@
         android:layout_height="match_parent"
         android:scrollbars="none"
         android:visibility="gone">
-
 
         <FrameLayout
             android:id="@+id/frame"
@@ -448,13 +449,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/white" />
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:layout_marginTop="38dp"
-            android:background="@drawable/white_gradient" />
+            android:background="#1B1C20" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/navAnim"
@@ -465,6 +460,7 @@
             android:layout_marginTop="-84dp"
             android:layout_marginRight="-100dp"
             android:layout_marginBottom="-100dp"
+            android:foregroundTint="@color/white"
             app:lottie_rawRes="@raw/menu" />
 
         <View
@@ -483,7 +479,9 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="13dp"
             android:layout_marginRight="32dp"
-            android:src="@color/black" />
+            android:src="@color/white"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="1dp" />
 
         <TextView
             android:id="@+id/title_name"
@@ -493,8 +491,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="8dp"
             android:fontFamily="@font/psb"
-            android:text="HILL'FFAIR 2018"
-            android:textColor="@color/dark_grey"
+            android:text="HILL'FFAIR 2019"
+            android:textColor="@color/white"
             android:textSize="19sp" />
 
     </RelativeLayout>

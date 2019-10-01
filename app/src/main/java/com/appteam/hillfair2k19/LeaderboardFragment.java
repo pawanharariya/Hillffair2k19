@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.fragment.app.Fragment;
@@ -17,17 +16,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
-import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.JSONObjectRequestListener;
 import com.appteam.adapters.LeaderboardAdapter;
-import com.appteam.hillfair2k19.IResult;
-import com.appteam.hillfair2k19.R;
-import com.appteam.hillfair2k19.VolleyService;
 import com.appteam.model.Leaderboard;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -39,6 +29,7 @@ import java.util.List;
 
 public class LeaderboardFragment extends Fragment implements View.OnClickListener {
     ProgressBar loadwall;
+    Boolean ToggleButtonState;
     private LeaderboardAdapter clubAdapter;
     private RecyclerView recyclerView;
     private List<Leaderboard> clubList = new ArrayList<>();
@@ -47,7 +38,6 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
     private IResult mResultCallback;
     private VolleyService mVolleyService;
     private ToggleButton toggleButton;
-    Boolean ToggleButtonState;
 
     public LeaderboardFragment() {
     }
@@ -67,7 +57,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         View view = inflater.inflate(R.layout.fragment_leaderboard, container, false);
 
-        toggleButton=view.findViewById(R.id.toggleButton);
+        toggleButton = view.findViewById(R.id.toggleButton);
         toggleButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,6 +82,7 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         Log.e("LeaderFragment", "onCreateView: ");
         return view;
     }
+
     public void getData() {
 
         clubList.clear();
@@ -105,15 +96,12 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
         final VolleyService mVolleyService = new VolleyService(mResultCallback, getContext());
 
-        ToggleButtonState= toggleButton.isChecked();
+        ToggleButtonState = toggleButton.isChecked();
 
         if (ToggleButtonState)
             mVolleyService.getJsonObjectDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/leaderboard");
         else
             mVolleyService.getJsonObjectDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/quiz/leaderboard");
-
-
-
 
 
     }
@@ -153,25 +141,25 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
 
                     Log.e("Hellcatt", response.toString());
                     //JsonObject
-                   // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
 
                     try {
-                        JSONArray array=response.getJSONArray("leaderboard");
-                        for (int i=0;i<array.length();++i){
-                            JSONObject object=array.getJSONObject(i);
-                            String name=object.getString("Name");
-                            ToggleButtonState= toggleButton.isChecked();
+                        JSONArray array = response.getJSONArray("leaderboard");
+                        for (int i = 0; i < array.length(); ++i) {
+                            JSONObject object = array.getJSONObject(i);
+                            String name = object.getString("Name");
+                            ToggleButtonState = toggleButton.isChecked();
                             int candies;
                             int quiz_rating;
 
-                            String gender=object.getString("Gender");
+                            String gender = object.getString("Gender");
                             Leaderboard leaderboard;
-                            if(ToggleButtonState){
-                                candies=object.getInt("candies");
-                                leaderboard=new Leaderboard(name,candies,gender);}
-                            else{
-                                quiz_rating=object.getInt("quiz_rating");
-                                leaderboard=new Leaderboard(name,quiz_rating,gender);
+                            if (ToggleButtonState) {
+                                candies = object.getInt("candies");
+                                leaderboard = new Leaderboard(name, candies, gender);
+                            } else {
+                                quiz_rating = object.getInt("quiz_rating");
+                                leaderboard = new Leaderboard(name, quiz_rating, gender);
                             }
 
                             clubList.add(leaderboard);
@@ -202,7 +190,6 @@ public class LeaderboardFragment extends Fragment implements View.OnClickListene
         };
 
     }
-
 
 
 }

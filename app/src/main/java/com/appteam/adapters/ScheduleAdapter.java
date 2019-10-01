@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.appteam.hillfair2k19.R;
 import com.appteam.model.Schedule;
-import com.squareup.picasso.Picasso;
 
 import java.util.List;
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Coded by ThisIsNSH on 9/20/2018.
@@ -53,13 +51,13 @@ public class ScheduleAdapter extends RecyclerView.Adapter<ScheduleAdapter.MyView
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView clubName,eventName,date,time;
+        TextView clubName, eventName, date, time;
 
 
         public MyViewHolder(View itemView) {
             super(itemView);
             clubName = itemView.findViewById(R.id.clubName);
-            eventName= itemView.findViewById(R.id.EventName);
+            eventName = itemView.findViewById(R.id.EventName);
             date = itemView.findViewById(R.id.date);
             time = itemView.findViewById(R.id.time);
         }

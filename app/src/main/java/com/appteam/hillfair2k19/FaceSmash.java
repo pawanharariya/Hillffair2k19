@@ -6,12 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-
 import android.os.Handler;
-
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,14 +20,15 @@ import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
+
 import com.android.volley.VolleyError;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,7 +55,6 @@ public class FaceSmash extends Fragment {
     private ImageView secondPersonImage;
 
 //    ArrayList<User> users;
-
 
 
     private HashMap<String, Boolean> hashMap;
@@ -313,7 +308,7 @@ public class FaceSmash extends Fragment {
 
                     Log.e("Hellcatt", response.toString());
                     //JsonObject
-                   // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
                 } else {
                     Log.e("zHell", jsonArray.toString());
 
@@ -327,8 +322,8 @@ public class FaceSmash extends Fragment {
                             obj = jsonArray.getJSONObject(i);
                             String url = obj.getString("url").replace("\\\\", "");
                             Log.e("URLs", url);
-                            if (url.contains("https")||url.contains("http"))
-                            imageUrls.add(url);
+                            if (url.contains("https") || url.contains("http"))
+                                imageUrls.add(url);
 
                             String id = obj.getString("firebase_id");
                             firebaseIds.add(id);
@@ -366,7 +361,7 @@ public class FaceSmash extends Fragment {
 
     void handleNoIMages() {
 
-        Log.d("sizes",String.valueOf(imageUrls.size()));
+        Log.d("sizes", String.valueOf(imageUrls.size()));
         new AlertDialog.Builder(getContext())
                 .setTitle("No Entries")
                 .setMessage("Sorry No Entries Left!")
@@ -411,7 +406,7 @@ public class FaceSmash extends Fragment {
 
     private void changeImage() {
 
-        Log.d("size",String.valueOf(imageUrls.size()));
+        Log.d("size", String.valueOf(imageUrls.size()));
 
         int n = imageUrls.size() * imageUrls.size();
         boolean flag2 = false;
@@ -421,7 +416,7 @@ public class FaceSmash extends Fragment {
             int firstUrl = new Random().nextInt(imageUrls.size());
             int secondUrl = new Random().nextInt(imageUrls.size());
 
-            if (!hashMap.containsKey(imageUrls.get(firstUrl) + imageUrls.get(secondUrl)) && !(imageUrls.get(firstUrl).equals(imageUrls.get(secondUrl))) ){
+            if (!hashMap.containsKey(imageUrls.get(firstUrl) + imageUrls.get(secondUrl)) && !(imageUrls.get(firstUrl).equals(imageUrls.get(secondUrl)))) {
 
                 Picasso.with(getContext()).load(imageUrls.get(firstUrl)).placeholder(R.drawable.progress_animation).into(firstPersonImage);
                 Picasso.with(getContext()).load(imageUrls.get(secondUrl)).placeholder(R.drawable.progress_animation).into(secondPersonImage);

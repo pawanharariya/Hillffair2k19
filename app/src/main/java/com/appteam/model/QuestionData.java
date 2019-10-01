@@ -9,18 +9,14 @@ public class QuestionData {
     private String option_4;
     private int option_chosen;
 
-    public QuestionData( int questionid, String question,String option_1, String option_2, String option_3, String option_4) {
+    public QuestionData(int questionid, String question, String option_1, String option_2, String option_3, String option_4) {
         this.question = question;
         this.questionid = questionid;
         this.option_1 = option_1;
         this.option_2 = option_2;
         this.option_3 = option_3;
         this.option_4 = option_4;
-        this.option_chosen=0;
-    }
-
-    public void setOption_chosen(int option_chosen) {
-        this.option_chosen = option_chosen;
+        this.option_chosen = 0;
     }
 
     public String getQuestion() {
@@ -49,5 +45,9 @@ public class QuestionData {
 
     public int getOption_chosen() {
         return option_chosen;
+    }
+
+    public void setOption_chosen(int option_chosen) {
+        this.option_chosen = option_chosen;
     }
 }

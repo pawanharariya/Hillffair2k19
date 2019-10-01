@@ -10,26 +10,17 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.volley.VolleyError;
 import com.androidnetworking.AndroidNetworking;
-import com.androidnetworking.error.ANError;
-import com.androidnetworking.interfaces.JSONArrayRequestListener;
-import com.androidnetworking.interfaces.StringRequestListener;
 import com.appteam.adapters.ScheduleAdapter;
 import com.appteam.hillfair2k19.IResult;
 import com.appteam.hillfair2k19.R;
 import com.appteam.hillfair2k19.VolleyService;
 import com.appteam.model.Schedule;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -90,9 +81,9 @@ public class ScheduleFragment extends Fragment {
         scheduleAdapter2 = new ScheduleAdapter(scheduleList2, activity);
         scheduleAdapter3 = new ScheduleAdapter(scheduleList3, activity);
 
-        linearLayoutManager1 = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
-        linearLayoutManager2 = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
-        linearLayoutManager3 = new LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false);
+        linearLayoutManager1 = new LinearLayoutManager(activity);
+        linearLayoutManager2 = new LinearLayoutManager(activity);
+        linearLayoutManager3 = new LinearLayoutManager(activity);
         recyclerView1.setLayoutManager(linearLayoutManager1);
         recyclerView1.setAdapter(scheduleAdapter1);
         recyclerView2.setLayoutManager(linearLayoutManager2);
@@ -117,13 +108,14 @@ public class ScheduleFragment extends Fragment {
         date3.setText("5 October");
         loadwall.setVisibility(View.VISIBLE);
 
+        //todo different dates ka different recycler view hai toh 3 different function banao neeche
 
-        initVolleyCallback();
+        initVolleyCallback1();
+        initVolleyCallback2();
+        initVolleyCallback3();
 
         mVolleyService = new VolleyService(mResultCallback, getContext());
         mVolleyService.getJsonArrayDataVolley("GETJSONARRAYLIFESAVER", getString(R.string.baseUrl) + "/schedule");
-
-
 
 
     }
@@ -152,49 +144,153 @@ public class ScheduleFragment extends Fragment {
 //        scheduleAdapter3.notifyDataSetChanged();
 
 
+    void initVolleyCallback1() {
 
-    void initVolleyCallback() {
-        Log.e("dffxx","maihun");
-        mResultCallback = new IResult() {
+        scheduleList1.add(new Schedule("Captain Marvel", "Her to Hero", "https://www.hdwallpapersfreedownload.com/uploads/large/super-heroes/captain-marvel-avengers-brie-larson-super-hero-hd-wallpaper.jpg", "05:00 PM", "1"));
+        scheduleList1.add(new Schedule("Thanos", "Infinity Stones", "https://pre00.deviantart.net/db91/th/pre/i/2017/197/8/0/thanos_wallpaper_16_by_rippenstain-dbghpzw.jpg", "06:00 PM", "1"));
+        scheduleList1.add(new Schedule("Iron Man", "Attitude and talent", "https://wallpapersite.com/images/pages/ico_n/15263.jpg", "07:00 PM", "1"));
+        scheduleAdapter1.notifyDataSetChanged();
+//
+//        mResultCallback = new IResult() {
+//
+//            @Override
+//            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
+//                Log.e("df", response.toString());
+//
+//                if (response != null) {
+//
+//                    Log.e("Hellcatt", response.toString());
+//
+//                    try {
+//                        JSONArray array = response.getJSONArray("shedule");
+//                        for (int i = 0; i < array.length(); ++i) {
+//                            JSONObject object = array.getJSONObject(i);
+//                            String clubName = object.getString("club_name");
+//                            String eventName = object.getString("event_name");
+//                            String evnentId = object.getString("even_id");
+//                            String date = object.getString("date");
+//                            String time = object.getString("time");
+//
+//
+//                            scheduleList1.add(new Schedule(clubName, eventName, evnentId, time, date));
+//                            scheduleAdapter1.notifyDataSetChanged();
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    //JsonObject
+//                    // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+//                } else {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void notifyError(String requestType, VolleyError error) {
+//                Log.i("error", error.toString());
+//            }
+//        };
 
-            @Override
-            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
-            Log.e("df",response.toString());
+    }
 
-                if (response != null) {
+    void initVolleyCallback2() {
 
-                    Log.e("Hellcatt", response.toString());
+        scheduleList2.add(new Schedule("Captain Marvel", "Her to Hero", "https://www.hdwallpapersfreedownload.com/uploads/large/super-heroes/captain-marvel-avengers-brie-larson-super-hero-hd-wallpaper.jpg", "05:00 PM", "1"));
+        scheduleList2.add(new Schedule("Thanos", "Infinity Stones", "https://pre00.deviantart.net/db91/th/pre/i/2017/197/8/0/thanos_wallpaper_16_by_rippenstain-dbghpzw.jpg", "06:00 PM", "1"));
+        scheduleList2.add(new Schedule("Iron Man", "Attitude and talent", "https://wallpapersite.com/images/pages/ico_n/15263.jpg", "07:00 PM", "1"));
+        scheduleAdapter2.notifyDataSetChanged();
+//
+//        mResultCallback = new IResult() {
+//
+//            @Override
+//            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
+//                Log.e("df", response.toString());
+//
+//                if (response != null) {
+//
+//                    Log.e("Hellcatt", response.toString());
+//
+//                    try {
+//                        JSONArray array = response.getJSONArray("shedule");
+//                        for (int i = 0; i < array.length(); ++i) {
+//                            JSONObject object = array.getJSONObject(i);
+//                            String clubName = object.getString("club_name");
+//                            String eventName = object.getString("event_name");
+//                            String evnentId = object.getString("even_id");
+//                            String date = object.getString("date");
+//                            String time = object.getString("time");
+//
+//
+//                            scheduleList1.add(new Schedule(clubName, eventName, evnentId, time, date));
+//                            scheduleAdapter1.notifyDataSetChanged();
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    //JsonObject
+//                    // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+//                } else {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void notifyError(String requestType, VolleyError error) {
+//                Log.i("error", error.toString());
+//            }
+//        };
 
-                    try {
-                        JSONArray array=response.getJSONArray("shedule");
-                        for (int i=0;i<array.length();++i){
-                            JSONObject object=array.getJSONObject(i);
-                            String clubName=object.getString("club_name");
-                            String eventName=object.getString("event_name");
-                            String evnentId=object.getString("even_id");
-                            String date=object.getString("date");
-                            String time=object.getString("time");
+    }
 
+    void initVolleyCallback3() {
 
-                            scheduleList1.add(new Schedule(clubName,eventName,evnentId,time,date));
-                            scheduleAdapter1.notifyDataSetChanged();
-                        }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    //JsonObject
-                    // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
-                } else {
-
-                }
-            }
-
-            @Override
-            public void notifyError(String requestType, VolleyError error) {
-                Log.i("error", error.toString());
-            }
-        };
+        scheduleList3.add(new Schedule("Captain Marvel", "Her to Hero", "https://www.hdwallpapersfreedownload.com/uploads/large/super-heroes/captain-marvel-avengers-brie-larson-super-hero-hd-wallpaper.jpg", "05:00 PM", "1"));
+        scheduleList3.add(new Schedule("Thanos", "Infinity Stones", "https://pre00.deviantart.net/db91/th/pre/i/2017/197/8/0/thanos_wallpaper_16_by_rippenstain-dbghpzw.jpg", "06:00 PM", "1"));
+        scheduleList3.add(new Schedule("Iron Man", "Attitude and talent", "https://wallpapersite.com/images/pages/ico_n/15263.jpg", "07:00 PM", "1"));
+        scheduleAdapter3.notifyDataSetChanged();
+//
+//        mResultCallback = new IResult() {
+//
+//            @Override
+//            public void notifySuccess(String requestType, JSONObject response, JSONArray jsonArray) {
+//                Log.e("df", response.toString());
+//
+//                if (response != null) {
+//
+//                    Log.e("Hellcatt", response.toString());
+//
+//                    try {
+//                        JSONArray array = response.getJSONArray("shedule");
+//                        for (int i = 0; i < array.length(); ++i) {
+//                            JSONObject object = array.getJSONObject(i);
+//                            String clubName = object.getString("club_name");
+//                            String eventName = object.getString("event_name");
+//                            String evnentId = object.getString("even_id");
+//                            String date = object.getString("date");
+//                            String time = object.getString("time");
+//
+//
+//                            scheduleList1.add(new Schedule(clubName, eventName, evnentId, time, date));
+//                            scheduleAdapter1.notifyDataSetChanged();
+//                        }
+//
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    //JsonObject
+//                    // Toast.makeText(getContext(), String.valueOf(response), Toast.LENGTH_SHORT).show();
+//                } else {
+//
+//                }
+//            }
+//
+//            @Override
+//            public void notifyError(String requestType, VolleyError error) {
+//                Log.i("error", error.toString());
+//            }
+//        };
 
     }
 
